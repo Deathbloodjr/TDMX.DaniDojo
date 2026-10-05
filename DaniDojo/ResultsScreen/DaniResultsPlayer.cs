@@ -25,7 +25,7 @@ namespace DaniDojo.ResultsScreen
     internal class DaniResultsPlayer : MonoBehaviour
     {
 #if IL2CPP
-            static DaniResultsPlayer() => ClassInjector.RegisterTypeInIl2Cpp<DaniResultsPlayer>();
+        static DaniResultsPlayer() => ClassInjector.RegisterTypeInIl2Cpp<DaniResultsPlayer>();
 #endif
         DaniResultScreen CurrentScreen;
 

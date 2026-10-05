@@ -13,7 +13,7 @@ namespace DaniDojo.ResultsScreen
     internal class PlayResultsView : MonoBehaviour
     {
 #if IL2CPP
-            static PlayResultsView() => ClassInjector.RegisterTypeInIl2Cpp<PlayResultsView>();
+        static PlayResultsView() => ClassInjector.RegisterTypeInIl2Cpp<PlayResultsView>();
 #endif
 
         private DaniResultsPlayer parent;

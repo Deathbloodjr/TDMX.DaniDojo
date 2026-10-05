@@ -68,6 +68,13 @@ namespace DaniDojo
 
             SetupConfig(Config, Path.Combine("BepInEx", "data", ModName));
 
+#if DEBUG
+            // Temporary example on how to use the new SpritePathResolver
+            //ModLogger.Log(SpritePathResolver.GetPath(DaniSprites.Common.CourseIcon.Background.Kyu));
+            //ModLogger.Log(DaniSprites.Common.CourseIcon.Background.Kyu.GetPath());
+            DaniSpriteValidator.ValidateAllSprites();
+#endif
+
             // This has to be moved somewhere else
             // But not now
             CourseDataManager.LoadCourseData();
@@ -117,11 +124,6 @@ namespace DaniDojo
                 "DanRankEnabled",
                 true,
                 "Enables the Dan Rank icon to the left of your name on the nameplate.");
-
-            // Temporary example on how to use the new SpritePathResolver
-            //ModLogger.Log(SpritePathResolver.GetPath(DaniSprites.Common.CourseIcon.Background.Kyu));
-            //ModLogger.Log(DaniSprites.Common.CourseIcon.Background.Kyu.GetPath());
-            DaniSpriteValidator.ValidateAllSprites();
         }
 
 

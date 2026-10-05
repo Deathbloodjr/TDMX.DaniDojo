@@ -13,7 +13,7 @@ namespace DaniDojo.ResultsScreen
     internal class AdvancementView : MonoBehaviour
     {
 #if IL2CPP
-            static AdvancementView() => ClassInjector.RegisterTypeInIl2Cpp<AdvancementView>();
+        static AdvancementView() => ClassInjector.RegisterTypeInIl2Cpp<AdvancementView>();
 #endif
 
         private DaniResultsPlayer parent;

@@ -15,7 +15,7 @@ namespace DaniDojo.ResultsScreen
     internal class SongsView : MonoBehaviour
     {
 #if IL2CPP
-            static SongsView() => ClassInjector.RegisterTypeInIl2Cpp<SongsView>();
+        static SongsView() => ClassInjector.RegisterTypeInIl2Cpp<SongsView>();
 #endif
         private List<GameObject> songPanels = new List<GameObject>();
 
