@@ -120,6 +120,8 @@ namespace DaniDojo
 
             // Temporary example on how to use the new SpritePathResolver
             //ModLogger.Log(SpritePathResolver.GetPath(DaniSprites.Common.CourseIcon.Background.Kyu));
+            //ModLogger.Log(DaniSprites.Common.CourseIcon.Background.Kyu.GetPath());
+            DaniSpriteValidator.ValidateAllSprites();
         }
 
 

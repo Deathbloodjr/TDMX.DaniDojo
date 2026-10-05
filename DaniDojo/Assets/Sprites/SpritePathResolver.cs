@@ -19,6 +19,11 @@ namespace DaniDojo.Assets.Sprites
             return _pathCache.GetOrAdd(spriteEnum, BuildPathForEnum);
         }
 
+        public static string GetPath(this Enum spriteEnum)
+        {
+            return _pathCache.GetOrAdd(spriteEnum, BuildPathForEnum);
+        }
+
         private static string BuildPathForEnum(Enum spriteEnum)
         {
             Type enumType = spriteEnum.GetType();
@@ -26,13 +31,21 @@ namespace DaniDojo.Assets.Sprites
 
             if (declaringType == null)
             {
-                UnityEngine.Debug.LogWarning($"[DaniDojo] Enum '{enumType.Name}' is not inside a static class!");
+                ModLogger.Log($"Enum '{enumType.Name}' is not inside a static class!", LogType.Warning);
                 return string.Empty;
             }
 
             List<string> folderSegments = new();
-            Type current = declaringType;
 
+            // Check if the Enum ITSELF has a [Folder("...")] attribute
+            var enumFolderAttr = enumType.GetCustomAttribute<FolderAttribute>();
+            if (enumFolderAttr != null)
+            {
+                folderSegments.Add(enumFolderAttr.FolderName);
+            }
+
+            // Walk up through parent static classes to gather their [Folder] attributes
+            Type current = declaringType;
             while (current != null)
             {
                 var folderAttr = current.GetCustomAttribute<FolderAttribute>();
@@ -49,6 +62,7 @@ namespace DaniDojo.Assets.Sprites
 
             string fullFolderPath = Path.Combine(folderSegments.ToArray());
 
+            // Resolve File Name
             string fileName = GetFileNameFromEnum(enumType, spriteEnum);
 
             return Path.Combine(fullFolderPath, fileName);
