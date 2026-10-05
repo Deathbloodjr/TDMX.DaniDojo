@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DaniDojo.Assets
+namespace DaniDojo.DaniCourseSelect.Views
 {
-    internal class CourseSelectAssets
+    internal class ConfirmationDialog
     {
     }
 }

@@ -17,7 +17,7 @@ namespace DaniDojo.Assets
         static string AssetFilePath = "";
         static Dictionary<string, Sprite> LoadedSprites;
 
-        static public Sprite LoadSprite(string spriteFilePath)
+        public static Sprite LoadSprite(string spriteFilePath)
         {
             var filePath = spriteFilePath;
             // If the dictionary wasn't created yet, create it
@@ -279,9 +279,23 @@ namespace DaniDojo.Assets
             return CreateImageChild(parent, name, position, sprite);
         }
 
+        static public GameObject CreateImageChild(GameObject parent, string name, string spriteFilePath)
+        {
+            var sprite = LoadSprite(spriteFilePath);
+            return CreateImageChild(parent, name, sprite);
+        }
+
         static public GameObject CreateImageChild(GameObject parent, string name, Rect rect, string spriteFilePath)
         {
             var sprite = LoadSprite(spriteFilePath);
+            return CreateImageChild(parent, name, rect, sprite);
+        }
+
+
+
+        static public GameObject CreateImageChild(GameObject parent, string name, Sprite sprite)
+        {
+            Rect rect = new Rect(Vector2.zero, new Vector2(sprite.rect.width, sprite.rect.height));
             return CreateImageChild(parent, name, rect, sprite);
         }
 

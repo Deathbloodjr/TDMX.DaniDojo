@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DaniDojo.ResultsScreen
+namespace DaniDojo.ResultsScreen.Views
 {
     internal class SongsView : MonoBehaviour
     {

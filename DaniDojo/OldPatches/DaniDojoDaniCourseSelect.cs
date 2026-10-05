@@ -1,5 +1,6 @@
 ﻿using DaniDojo.Assets;
 using DaniDojo.Assets.Audio;
+using DaniDojo.DaniCourseSelect;
 using DaniDojo.Data;
 using DaniDojo.Managers;
 using System;
@@ -368,7 +369,7 @@ namespace DaniDojo.Patches
                 SceneManager.SetActiveScene(daniDojoScene);
 
                 var CourseSelectManager = new GameObject("CourseSelectManager");
-                CourseSelectManager.AddComponent<DaniDojoDaniCourseSelect.DaniDojoSelectManager>();
+                CourseSelectManager.AddComponent<CourseSelectSceneController>();
             }
         }
 
@@ -380,7 +381,7 @@ namespace DaniDojo.Patches
             }
             var CourseSelectManager = new GameObject("CourseSelectManager");
             CourseSelectManager.transform.position = Vector3.zero;
-            CourseSelectManager.AddComponent<DaniDojoDaniCourseSelect.DaniDojoSelectManager>();
+            CourseSelectManager.AddComponent<CourseSelectSceneController>();
         }
 
 
