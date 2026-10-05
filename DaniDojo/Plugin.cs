@@ -13,6 +13,7 @@ using DaniDojo.Managers;
 using DaniDojo.Hooks;
 using CustomGameModes.Patches;
 using UnityEngine.Events;
+using DaniDojo.Assets.Sprites;
 
 
 
@@ -116,6 +117,9 @@ namespace DaniDojo
                 "DanRankEnabled",
                 true,
                 "Enables the Dan Rank icon to the left of your name on the nameplate.");
+
+            // Temporary example on how to use the new SpritePathResolver
+            //ModLogger.Log(SpritePathResolver.GetPath(DaniSprites.Common.CourseIcon.Background.Kyu));
         }
 
 
