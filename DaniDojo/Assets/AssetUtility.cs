@@ -14,505 +14,311 @@ namespace DaniDojo.Assets
 {
     internal class AssetUtility
     {
-        static string AssetFilePath = "";
-        static Dictionary<string, Sprite> LoadedSprites;
-
-        public static Sprite LoadSprite(string spriteFilePath)
+        static string _assetFilePath = string.Empty;
+        static Dictionary<string, Sprite> LoadedSprites = new Dictionary<string, Sprite>();
+        private static Sprite _fallbackSprite;
+        private static Sprite FallbackSprite
         {
-            var filePath = spriteFilePath;
-            // If the dictionary wasn't created yet, create it
-            if (LoadedSprites == null)
+            get
             {
-                LoadedSprites = new Dictionary<string, Sprite>();
+                if (_fallbackSprite == null)
+                {
+                    Texture2D tex = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+                    tex.SetPixel(0, 0, Color.clear);
+                    tex.Apply();
+                    _fallbackSprite = Sprite.Create(tex, new Rect(0, 0, 1, 1), Vector2.zero);
+                }
+                return _fallbackSprite;
             }
+        }
 
-            if (AssetFilePath == "")
+        #region Path & Sprite Handling
+        private static string GetAssetRootPath()
+        {
+            if (!string.IsNullOrEmpty(_assetFilePath))
+                return _assetFilePath;
+
+            string configPath = Plugin.Instance.ConfigDaniDojoAssetLocation.Value;
+            _assetFilePath = configPath;
+
+            if (Directory.Exists(configPath))
             {
-                AssetFilePath = Plugin.Instance.ConfigDaniDojoAssetLocation.Value;
-                DirectoryInfo dirInfo = new DirectoryInfo(Plugin.Instance.ConfigDaniDojoAssetLocation.Value);
-                List<string> anchorFiles = new List<string>()
+                DirectoryInfo dirInfo = new DirectoryInfo(configPath);
+                string[] anchorFiles = { "README.txt", "danidojo.scene", "CustomGameModes.scene" };
+
+                foreach (string anchor in anchorFiles)
                 {
-                    "README.txt",
-                    "danidojo.scene",
-                    "CustomGameModes.scene",
-                };
-                for (int i = 0; i < anchorFiles.Count; i++)
-                {
-                    var files = dirInfo.GetFiles(anchorFiles[i], SearchOption.AllDirectories);
-                    if (files.Length != 0)
+                    FileInfo[] files = dirInfo.GetFiles(anchor, SearchOption.AllDirectories);
+                    if (files.Length > 0 && files[0].Directory != null)
                     {
-                        AssetFilePath = files[0].Directory.FullName;
+                        _assetFilePath = files[0].Directory.FullName;
                         break;
                     }
                 }
             }
 
-            // If the file doesn't start with the Asset path, append it on
-            if (!File.Exists(filePath) && !filePath.StartsWith(AssetFilePath))
+            return _assetFilePath;
+        }
+
+        public static Sprite LoadSprite(string relativeOrAbsolutePath)
+        {
+            if (string.IsNullOrEmpty(relativeOrAbsolutePath))
+                return FallbackSprite;
+
+            if (LoadedSprites.TryGetValue(relativeOrAbsolutePath, out Sprite cachedSprite))
+                return cachedSprite;
+
+            string rootPath = GetAssetRootPath();
+            string filePath = relativeOrAbsolutePath;
+
+            if (!File.Exists(filePath) && !filePath.StartsWith(rootPath))
             {
-                filePath = Path.Combine(AssetFilePath, filePath);
+                filePath = Path.Combine(rootPath, filePath);
             }
 
-            // If the file doesn't end with an extension (".png")
-            // Add the extension automatically
-            // This feels very hardcodey, but it could be a decent start for something decent
-            if (!File.Exists(filePath) && !filePath.Contains("."))
+            if (!File.Exists(filePath) && !Path.HasExtension(filePath))
             {
                 filePath += ".png";
             }
 
-            // If the dictionary has the filepath as a key, return the corresponding sprite
-            if (LoadedSprites.ContainsKey(spriteFilePath))
+            if (File.Exists(filePath))
             {
-                return LoadedSprites[spriteFilePath];
-            }
-            // otherwise, if the file exists, load it, and add it to the dictionary
-            else if (File.Exists(filePath))
-            {
-                LoadedSprites.Add(spriteFilePath, LoadSpriteFromFile(filePath));
-                return LoadedSprites[spriteFilePath];
-            }
-            // otherwise, the file doesn't exist, log an error, and return null (or hopefully a small transparent sprite
-            else
-            {
-                ModLogger.Log("Could not find file: " + spriteFilePath, LogType.Error);
-                ModLogger.Log("Searched for : " + filePath, LogType.Error);
-                // Instead of null, could I have this return just a 1x1 transparent sprite or something?
-
-                // Creates a transparent 2x2 texture, and returns that as the sprite
+                byte[] fileData = File.ReadAllBytes(filePath);
+#if IL2CPP
                 Texture2D tex = new Texture2D(2, 2, TextureFormat.ARGB32, 1, false, IntPtr.Zero);
-                Color fillColor = Color.clear;
-                Color[] fillPixels = new Color[tex.width * tex.height];
-                for (int i = 0; i < fillPixels.Length; i++)
+                ImageConversion.LoadImage(tex, fileData);
+#else
+                Texture2D tex = new Texture2D(2, 2, TextureFormat.ARGB32, false);
+                tex.LoadImage(fileData);
+#endif
+                Sprite loadedSprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+                LoadedSprites[relativeOrAbsolutePath] = loadedSprite;
+                return loadedSprite;
+            }
+
+            ModLogger.Log($"Could not find sprite at path: {relativeOrAbsolutePath} (Checked: {filePath})", LogType.Error);
+            LoadedSprites[relativeOrAbsolutePath] = FallbackSprite;
+            return FallbackSprite;
+        }
+
+        #endregion
+
+
+        public static GameObject FindChild(GameObject parent, string name, bool recursive = false)
+        {
+            if (parent == null) return null;
+
+            Transform directChild = parent.transform.Find(name);
+            if (directChild != null) return directChild.gameObject;
+
+            if (recursive)
+            {
+                foreach (Transform child in parent.transform)
                 {
-                    fillPixels[i] = fillColor;
+                    GameObject result = FindChild(child.gameObject, name, true);
+                    if (result != null) return result;
                 }
-                tex.SetPixels(fillPixels);
-                tex.Apply();
-
-                Rect rect = new Rect(0, 0, tex.width, tex.height);
-                LoadedSprites.Add(spriteFilePath, Sprite.Create(tex, rect, new Vector2(0, 0)));
-                return LoadedSprites[spriteFilePath];
             }
+
+            return null;
         }
 
-        static public GameObject GetOrCreateEmptyChild(GameObject parent, string name, Vector2 position)
+        public static Canvas CreateRootCanvas(string name = "DaniDojoCanvas", int sortingOrder = 0)
         {
-            var child = GetChildByName(parent, name);
-            if (child == null)
-            {
-                child = CreateEmptyObject(parent, name, position);
-            }
-            return child;
+            GameObject canvasObj = new GameObject(name);
+
+            Canvas canvas = canvasObj.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = sortingOrder;
+
+            CanvasScaler scaler = canvasObj.AddComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1920, 1080);
+            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+            scaler.matchWidthOrHeight = 0;
+
+            canvasObj.AddComponent<GraphicRaycaster>();
+            return canvas;
         }
 
-        static public GameObject CreateEmptyObject(GameObject parent, string name, Vector2 position)
+        public static GameObject CreateUIContainer(GameObject parent, string name, Vector2 position = default, Vector2 size = default)
         {
-            Rect rect = new Rect(position, Vector2.zero);
-            return CreateEmptyObject(parent, name, rect);
-        }
-
-        public static GameObject GetChildByName(GameObject obj, string name)
-        {
-            Transform trans = obj.transform;
-            Transform childTrans = trans.Find(name);
-            if (childTrans != null)
-            {
-                return childTrans.gameObject;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        static public GameObject CreateEmptyObject(GameObject parent, string name, Rect rect)
-        {
-            GameObject newObject = new GameObject(name);
+            GameObject container = new GameObject(name);
             if (parent != null)
             {
-                newObject.transform.SetParent(parent.transform);
+                container.transform.SetParent(parent.transform, false);
             }
-            SetRect(newObject, rect);
-            return newObject;
+
+            RectTransform rect = container.GetOrAddComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0.5f, 0.5f);
+            rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.anchoredPosition = position;
+            rect.sizeDelta = size;
+            rect.localScale = Vector3.one;
+
+            return container;
         }
 
-
-        static public Canvas AddCanvasComponent(GameObject gameObject)
+        public static TextMeshProUGUI CreateText(
+            GameObject parent,
+            string name,
+            string text = "",
+            Vector2 position = default,
+            Vector2 size = default,
+            float fontSize = 32f,
+            Color? color = null,
+            TextAlignmentOptions alignment = TextAlignmentOptions.Center,
+            TMP_FontAsset font = null,
+            Material fontMaterial = null)
         {
-            var canvasObject = gameObject.GetOrAddComponent<Canvas>();
-            canvasObject.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvasObject.worldCamera = null;
-            canvasObject.overrideSorting = true;
+            GameObject container = CreateUIContainer(parent, name, position, size);
+            TextMeshProUGUI tmp = container.AddComponent<TextMeshProUGUI>();
 
-            var canvasScalerObject = gameObject.GetOrAddComponent<CanvasScaler>();
-            canvasScalerObject.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            canvasScalerObject.referenceResolution = new Vector2(1920, 1080);
-            canvasScalerObject.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
-            canvasScalerObject.matchWidthOrHeight = 0;
+            tmp.text = text;
+            tmp.fontSize = fontSize;
+            tmp.color = color ?? Color.white;
+            tmp.alignment = alignment;
 
-            return canvasObject;
+            if (font != null)
+                tmp.font = font;
+
+            if (fontMaterial != null)
+                tmp.fontSharedMaterial = fontMaterial;
+
+            return tmp;
         }
 
-
-
-        #region Text
-
-        static public GameObject GetOrCreateTextChild(GameObject parent, string name, Rect rect, string text)
+        public static void SetText(GameObject target, string newText)
         {
-            var imageChild = GetChildByName(parent, name);
-            if (imageChild == null)
+            if (target == null) return;
+            if (target.TryGetComponent<TextMeshProUGUI>(out var tmp))
             {
-                imageChild = CreateTextChild(parent, name, rect, text);
+                tmp.text = newText;
             }
-            else
+        }
+
+        public static void SetText(TextMeshProUGUI tmpComponent, string newText)
+        {
+            if (tmpComponent != null)
             {
-                ChangeText(parent, text);
+                tmpComponent.text = newText;
             }
-            return imageChild;
-        }
-        static public GameObject CreateTextChild(GameObject parent, string name, Rect rect, string text)
-        {
-            GameObject newObject = CreateEmptyObject(parent, name, rect);
-            var textComponent = newObject.GetOrAddComponent<TextMeshProUGUI>();
-            ChangeText(newObject, text);
-            textComponent.enableAutoSizing = true;
-            textComponent.fontSizeMax = 1000;
-            textComponent.verticalAlignment = VerticalAlignmentOptions.Middle;
-
-            return newObject;
         }
 
-        static public void ChangeText(TextMeshProUGUI textComponent, string text)
+        public static void SetTextStyle(TextMeshProUGUI tmpComponent, TMP_FontAsset font, Material fontMaterial = null)
         {
-            if (textComponent == null)
+            if (tmpComponent == null) return;
+            if (font != null) tmpComponent.font = font;
+            if (fontMaterial != null) tmpComponent.fontSharedMaterial = fontMaterial;
+        }
+
+
+        public static Image CreateImage(GameObject parent, string name, Sprite sprite, Vector2 position = default, bool useNativeSize = true)
+        {
+            GameObject container = CreateUIContainer(parent, name, position, Vector2.zero);
+            Image img = container.AddComponent<Image>();
+            img.sprite = sprite;
+
+            if (useNativeSize && sprite != null)
             {
-                return;
+                img.SetNativeSize();
             }
-            textComponent.text = text;
+
+            return img;
         }
 
-        static public void ChangeText(GameObject gameObject, string text)
+        public static Image CreateImage(GameObject parent, string name, string spritePath, Vector2 position = default, bool useNativeSize = true)
         {
-            var textComponent = gameObject.GetOrAddComponent<TextMeshProUGUI>();
-
-            ChangeText(textComponent, text);
-
-            return;
-        }
-        static public void SetTextFontAndMaterial(GameObject gameObject, TMP_FontAsset font, Material material)
-        {
-            var textComponent = gameObject.GetOrAddComponent<TextMeshProUGUI>();
-            SetTextFontAndMaterial(textComponent, font, material);
+            Sprite sprite = LoadSprite(spritePath);
+            return CreateImage(parent, name, sprite, position, useNativeSize);
         }
 
-        static public void SetTextFontAndMaterial(TextMeshProUGUI text, TMP_FontAsset font, Material material)
+        public static Image CreateSolidPanel(GameObject parent, string name, Vector2 position, Vector2 size, Color color)
         {
-            if (text != null)
-            {
-                text.font = font;
-                text.fontSharedMaterial = material;
-            }
+            GameObject container = CreateUIContainer(parent, name, position, size);
+            Image img = container.AddComponent<Image>();
+            img.color = color;
+            return img;
         }
 
-        static public void SetTextAlignment(GameObject gameObject, HorizontalAlignmentOptions horizAlignment = HorizontalAlignmentOptions.Left,
-                                                                     VerticalAlignmentOptions vertAlignment = VerticalAlignmentOptions.Top)
+        public static void SetSprite(Image image, Sprite sprite, bool resetNativeSize = false)
         {
-            var textComponent = gameObject.GetOrAddComponent<TextMeshProUGUI>();
-            SetTextAlignment(textComponent, horizAlignment, vertAlignment);
-        }
-
-        static public void SetTextAlignment(TextMeshProUGUI text, HorizontalAlignmentOptions horizAlignment = HorizontalAlignmentOptions.Left,
-                                                                             VerticalAlignmentOptions vertAlignment = VerticalAlignmentOptions.Top)
-        {
-            if (text != null)
-            {
-                text.horizontalAlignment = horizAlignment;
-                text.verticalAlignment = vertAlignment;
-            }
-        }
-
-        static public void SetTextColor(GameObject gameObject, Color color)
-        {
-            var textComponent = gameObject.GetOrAddComponent<TextMeshProUGUI>();
-            textComponent.color = color;
-        }
-
-        static public void SetTextFontSize(GameObject gameObject, float fontSize)
-        {
-            var textComponent = gameObject.GetOrAddComponent<TextMeshProUGUI>();
-            textComponent.enableAutoSizing = false;
-            textComponent.fontSize = fontSize;
-        }
-
-        #endregion
-
-
-        #region Image
-
-        static public GameObject GetOrCreateImageChild(GameObject parent, string name, Vector2 position, string spriteFilePath)
-        {
-            var imageChild = GetChildByName(parent, name);
-            if (imageChild == null)
-            {
-                imageChild = CreateImageChild(parent, name, position, spriteFilePath);
-            }
-            else
-            {
-                imageChild.GetOrAddComponent<Image>().sprite = LoadSprite(spriteFilePath);
-            }
-            return imageChild;
-        }
-
-        static public GameObject CreateImageChild(GameObject parent, string name, Rect rect, Color32 color)
-        {
-            GameObject newObject = CreateEmptyObject(parent, name, rect);
-            var image = newObject.GetOrAddComponent<Image>();
-            image.color = color;
-
-            return newObject;
-        }
-
-        static public GameObject CreateImageChild(GameObject parent, string name, Vector2 position, string spriteFilePath)
-        {
-            var sprite = LoadSprite(spriteFilePath);
-            return CreateImageChild(parent, name, position, sprite);
-        }
-
-        static public GameObject CreateImageChild(GameObject parent, string name, string spriteFilePath)
-        {
-            var sprite = LoadSprite(spriteFilePath);
-            return CreateImageChild(parent, name, sprite);
-        }
-
-        static public GameObject CreateImageChild(GameObject parent, string name, Rect rect, string spriteFilePath)
-        {
-            var sprite = LoadSprite(spriteFilePath);
-            return CreateImageChild(parent, name, rect, sprite);
-        }
-
-
-
-        static public GameObject CreateImageChild(GameObject parent, string name, Sprite sprite)
-        {
-            Rect rect = new Rect(Vector2.zero, new Vector2(sprite.rect.width, sprite.rect.height));
-            return CreateImageChild(parent, name, rect, sprite);
-        }
-
-        static public GameObject CreateImageChild(GameObject parent, string name, Vector2 position, Sprite sprite)
-        {
-            Rect rect = new Rect(position, new Vector2(sprite.rect.width, sprite.rect.height));
-            return CreateImageChild(parent, name, rect, sprite);
-        }
-
-        static public GameObject CreateImageChild(GameObject parent, string name, Rect rect, Sprite sprite)
-        {
-            GameObject newObject = CreateEmptyObject(parent, name, rect);
-            var image = newObject.GetOrAddComponent<Image>();
+            if (image == null) return;
             image.sprite = sprite;
-
-            return newObject;
-        }
-
-        static public void ChangeImageColor(GameObject gameObject, Color32 color)
-        {
-            var image = GetOrAddImageComponent(gameObject);
-            image.color = color;
-        }
-
-        static public Image GetOrAddImageComponent(GameObject gameObject)
-        {
-            var imageObject = gameObject.GetComponent<Image>();
-            if (imageObject == null)
+            if (resetNativeSize && sprite != null)
             {
-                imageObject = gameObject.AddComponent<Image>();
-            }
-
-            return imageObject;
-        }
-
-        static private Sprite LoadSpriteFromFile(string spriteFilePath)
-        {
-#if IL2CPP
-            Texture2D tex = new Texture2D(2, 2, TextureFormat.ARGB32, 1, false, IntPtr.Zero);
-#elif MONO
-            Texture2D tex = new Texture2D(2, 2, TextureFormat.ARGB32, 1, false);
-#endif
-            if (!File.Exists(spriteFilePath))
-            {
-                ModLogger.Log("Could not find file: " + spriteFilePath, LogType.Error);
-            }
-            else
-            {
-#if IL2CPP
-                //tex.LoadRawTextureDataImplArray(File.ReadAllBytes(spriteFilePath));
-                ImageConversion.LoadImage(tex, File.ReadAllBytes(spriteFilePath));
-#elif MONO
-                tex.LoadImage(File.ReadAllBytes(spriteFilePath));
-#endif
-            }
-
-
-            Rect rect = new Rect(0, 0, tex.width, tex.height);
-            return Sprite.Create(tex, rect, new Vector2(0, 0));
-        }
-
-        static public Image ChangeImageSprite(GameObject gameObject, string spriteFilePath)
-        {
-            var image = GetOrAddImageComponent(gameObject);
-            return ChangeImageSprite(image, spriteFilePath);
-        }
-
-        static public Image ChangeImageSprite(GameObject gameObject, Sprite sprite)
-        {
-            var image = GetOrAddImageComponent(gameObject);
-            return ChangeImageSprite(image, sprite);
-        }
-
-        static public Image ChangeImageSprite(Image image, string spriteFilePath)
-        {
-            var sprite = LoadSprite(spriteFilePath);
-            if (sprite == null)
-            {
-                return image;
-            }
-            return ChangeImageSprite(image, sprite);
-        }
-
-        static public Image ChangeImageSprite(Image image, Sprite sprite)
-        {
-            image.sprite = sprite;
-            return image;
-        }
-
-
-
-        #endregion
-
-
-        #region RectTransform
-
-        // This feels kinda repetitive, but I think it's fine
-        static public RectTransform SetRect(GameObject gameObject, Rect rect)
-        {
-            var rectTransform = gameObject.GetOrAddComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(rect.width, rect.height);
-            rectTransform.anchoredPosition = new Vector2(rect.x, rect.y);
-            rectTransform.anchorMin = Vector2.zero;
-            rectTransform.anchorMax = Vector2.zero;
-            rectTransform.pivot = Vector2.zero;
-
-            gameObject.transform.localScale = Vector3.one;
-
-            return rectTransform;
-        }
-        static public RectTransform SetRect(GameObject gameObject, Vector2 pos)
-        {
-            var rectTransform = gameObject.GetOrAddComponent<RectTransform>();
-            rectTransform.anchoredPosition = pos;
-            rectTransform.anchorMin = Vector2.zero;
-            rectTransform.anchorMax = Vector2.zero;
-            rectTransform.pivot = Vector2.zero;
-
-            gameObject.transform.localScale = Vector3.one;
-
-            return rectTransform;
-        }
-        static public RectTransform SetRect(GameObject gameObject, Rect rect, Vector2 anchorMin, Vector2 anchorMax)
-        {
-            var rectTransform = SetRect(gameObject, rect);
-            rectTransform.anchorMin = anchorMin;
-            rectTransform.anchorMax = anchorMax;
-            return rectTransform;
-        }
-        static public void SetRect(GameObject gameObject, Rect rect, Vector2 pivot)
-        {
-            var rectTransform = SetRect(gameObject, rect);
-            rectTransform.pivot = pivot;
-        }
-        static public void SetRect(GameObject gameObject, Rect rect, Vector2 anchorMin, Vector2 anchorMax, Vector2 pivot)
-        {
-            var rectTransform = SetRect(gameObject, rect, anchorMin, anchorMax);
-            rectTransform.pivot = pivot;
-        }
-
-        #endregion
-
-        public static IEnumerator MoveOverSeconds(GameObject objectToMove, Vector3 end, float seconds, bool deleteAfter = false)
-        {
-            float elapsedTime = 0;
-            Vector3 startingPos = objectToMove.transform.position;
-            while (elapsedTime < seconds)
-            {
-                objectToMove.transform.position = Vector3.Lerp(startingPos, end, (elapsedTime / seconds));
-                elapsedTime += Time.deltaTime;
-                yield return new WaitForEndOfFrame();
-            }
-            objectToMove.transform.position = end;
-            if (deleteAfter)
-            {
-                GameObject.Destroy(objectToMove);
+                image.SetNativeSize();
             }
         }
 
-        public static IEnumerator ChangeTransparencyOverSeconds(GameObject obj, float seconds, bool makeVisible)
+        public static void SetSprite(Image image, string spritePath, bool resetNativeSize = false)
         {
-            float endValue = makeVisible ? 1f : 0f;
-            var image = obj.GetComponent<Image>();
-            float imageStartValue = 0f;
+            SetSprite(image, LoadSprite(spritePath), resetNativeSize);
+        }
+
+        public static void SetImageColor(GameObject gameObject, Color color)
+        {
+            var image = gameObject.GetComponent<Image>();
+            SetImageColor(image, color);
+        }
+
+        public static void SetImageColor(Image image, Color color)
+        {
             if (image != null)
             {
-                imageStartValue = image.color.a;
-            }
-            var text = obj.GetComponent<TextMeshProUGUI>();
-            float textStartValue = 0f;
-            if (text != null)
-            {
-                textStartValue = text.color.a;
-            }
-            float elapsedTime = 0;
-            while (elapsedTime < seconds)
-            {
-                if (image != null)
-                {
-                    image.color = new Color(image.color.r, image.color.g, image.color.b, Mathf.Lerp(imageStartValue, endValue, elapsedTime / seconds));
-                }
-                if (text != null)
-                {
-                    text.color = new Color(text.color.r, text.color.g, text.color.b, Mathf.Lerp(textStartValue, endValue, elapsedTime / seconds));
-                }
-                elapsedTime += Time.deltaTime;
-                yield return new WaitForEndOfFrame();
-            }
-            if (image != null)
-            {
-                image.color = new Color(image.color.r, image.color.g, image.color.b, endValue);
-            }
-            if (text != null)
-            {
-                text.color = new Color(text.color.r, text.color.g, text.color.b, endValue);
+                image.color = color;
             }
         }
 
-        public static Vector2 GetPositionFrom1080p(Vector2 inputPos)
+
+        public static void SetPosition(GameObject target, Vector3 localPosition)
         {
-            Vector2 result = new Vector2()
+            if (target != null)
             {
-                x = (inputPos.x / 1920f) * Screen.width,
-                y = (inputPos.y / 1080f) * Screen.height,
-            };
-            return result;
+                target.transform.localPosition = localPosition;
+            }
         }
 
-        public static Vector3 GetPositionFrom1080p(Vector3 inputPos)
+        public static void SetSize(GameObject target, Vector2 sizeDelta)
         {
-            Vector3 result = new Vector3()
+            if (target == null) return;
+            if (target.TryGetComponent<RectTransform>(out var rect))
             {
-                x = (inputPos.x / 1920f) * Screen.width,
-                y = (inputPos.y / 1080f) * Screen.height,
-                z = inputPos.z,
-            };
-            return result;
+                rect.sizeDelta = sizeDelta;
+            }
+        }
+
+        public static void SetScale(GameObject target, Vector3 scale)
+        {
+            if (target != null)
+            {
+                target.transform.localScale = scale;
+            }
+        }
+
+        public static void SetUniformScale(GameObject target, float scale)
+        {
+            if (target != null)
+            {
+                target.transform.localScale = new Vector3(scale, scale, scale);
+            }
+        }
+
+        public static void FlipHorizontal(GameObject target)
+        {
+            if (target == null) return;
+            Vector3 scale = target.transform.localScale;
+            scale.x *= -1f; // Inverts current orientation
+            target.transform.localScale = scale;
+        }
+
+        public static void SetAlpha(GameObject target, float alpha)
+        {
+            if (target == null) return;
+            CanvasGroup group = target.GetOrAddComponent<CanvasGroup>();
+            group.alpha = Mathf.Clamp01(alpha);
         }
     }
 

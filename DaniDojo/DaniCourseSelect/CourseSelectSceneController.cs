@@ -1,7 +1,9 @@
 ﻿using DaniDojo.Assets;
 using DaniDojo.DaniCourseSelect.Views;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,25 +33,46 @@ namespace DaniDojo.DaniCourseSelect
 
         private void Start()
         {
+            if (TaikoSingletonMonoBehaviour<InputGuide>.Instance.IsEnableGuide())
+            {
+                TaikoSingletonMonoBehaviour<InputGuide>.Instance.DisableGuide();
+            }
+
             InitializeAssets();
 
 
-            ChangeState(CourseSelectState.Intro);
 
 
-            introHandler.StartIntro();
         }
 
         private void InitializeAssets()
         {
-            var canvas = AssetUtility.CreateEmptyObject(null, "BgCanvas", Vector2.zero);
-            AssetUtility.AddCanvasComponent(canvas);
-            introHandler = canvas.AddComponent<IntroHandler>();
+            var selectionCanvas = AssetUtility.CreateRootCanvas("SelectionCanvas");
+            var selectionManagerObject = AssetUtility.CreateUIContainer(selectionCanvas.gameObject, "SelectionManager");
+            selectionManager = selectionManagerObject.AddComponent<SelectionManager>();
+            selectionManager.Initialize(this);
+
+            var introCanvas = AssetUtility.CreateRootCanvas("IntroCanvas");
+            var introHandlerObject = AssetUtility.CreateUIContainer(introCanvas.gameObject, "IntroHandler");
+            introHandler = introHandlerObject.AddComponent<IntroHandler>();
             introHandler.Initialize(this);
+
+            var confirmationDialogCanvas = AssetUtility.CreateRootCanvas("confirmationDialogCanvas");
+            var confirmationDialogObject = AssetUtility.CreateUIContainer(confirmationDialogCanvas.gameObject, "ConfirmationDialog");
+            confirmationDialog = confirmationDialogObject.AddComponent<ConfirmationDialog>();
+            confirmationDialog.Initialize(this);
+
+            ChangeState(CourseSelectState.Intro);
+            introHandler.StartIntro();
         }
 
         private void Update()
         {
+            if (TaikoSingletonMonoBehaviour<InputGuide>.Instance.IsEnableGuide())
+            {
+                TaikoSingletonMonoBehaviour<InputGuide>.Instance.DisableGuide();
+            }
+
             // Input is routed ONLY to the active state handler
             switch (currentState)
             {

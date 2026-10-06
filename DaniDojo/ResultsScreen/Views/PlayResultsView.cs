@@ -52,7 +52,7 @@ namespace DaniDojo.ResultsScreen.Views
             {
                 Plugin.Instance.StopCoroutine(screenChangeAnimation);
             }
-            screenChangeAnimation = Plugin.Instance.StartCoroutine(SlideMainScreenTo(PlayRecordParent.GetComponent<RectTransform>(), new Vector2(0, 44) + AssetUtility.GetPositionFrom1080p(new Vector2(337, 0))));
+            screenChangeAnimation = Plugin.Instance.StartCoroutine(SlideMainScreenTo(PlayRecordParent.GetComponent<RectTransform>(), new Vector2(0, 44) + OldAssetUtility.GetPositionFrom1080p(new Vector2(337, 0))));
         }
 
         public void ScreenExit()
@@ -61,7 +61,7 @@ namespace DaniDojo.ResultsScreen.Views
             {
                 Plugin.Instance.StopCoroutine(screenChangeAnimation);
             }
-            screenChangeAnimation = Plugin.Instance.StartCoroutine(SlideMainScreenTo(PlayRecordParent.GetComponent<RectTransform>(), new Vector2(0, 44) + AssetUtility.GetPositionFrom1080p(new Vector2(337 + 1920, 0))));
+            screenChangeAnimation = Plugin.Instance.StartCoroutine(SlideMainScreenTo(PlayRecordParent.GetComponent<RectTransform>(), new Vector2(0, 44) + OldAssetUtility.GetPositionFrom1080p(new Vector2(337 + 1920, 0))));
         }
 
         private void SnapToEndPosition()

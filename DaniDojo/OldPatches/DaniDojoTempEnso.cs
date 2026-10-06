@@ -165,7 +165,7 @@ namespace DaniDojo.Patches
                 songInfoObject = GameObject.Find("SongInfo");
                 yield return null;
             } while (songInfoObject == null);
-            var songInfoSongTitleObject = AssetUtility.GetChildByName(songInfoObject, "uiText_song_title_center");
+            var songInfoSongTitleObject = OldAssetUtility.GetChildByName(songInfoObject, "uiText_song_title_center");
             var songInfoLayout = songInfoObject.GetComponent<SongInfoLayOut>();
             var songInfoPlayer = songInfoObject.GetComponent<SongInfoPlayer>();
 
@@ -191,8 +191,8 @@ namespace DaniDojo.Patches
                 subtitleText.fontSize = 34;
 
                 int leftX = 1211;
-                laneCoverLeft = AssetUtility.CreateImageChild(canvasBack, "LaneCoverLeft", new Vector2(leftX, 596), Path.Combine("Enso", "LaneCover.png"));
-                laneCoverRight = AssetUtility.CreateImageChild(canvasBack, "LaneCoverRight", new Vector2(leftX, 596), Path.Combine("Enso", "LaneCover.png"));
+                laneCoverLeft = OldAssetUtility.CreateImageChild(canvasBack, "LaneCoverLeft", new Vector2(leftX, 596), Path.Combine("Enso", "LaneCover.png"));
+                laneCoverRight = OldAssetUtility.CreateImageChild(canvasBack, "LaneCoverRight", new Vector2(leftX, 596), Path.Combine("Enso", "LaneCover.png"));
                 laneCoverLeft.transform.localScale = new Vector3(-1, 1, 1);
             }
             else
@@ -200,8 +200,8 @@ namespace DaniDojo.Patches
                 leftPos = new Vector2(laneCoverLeft.transform.localPosition.x, laneCoverLeft.transform.localPosition.y);
                 rightPos = new Vector2(laneCoverRight.transform.localPosition.x, laneCoverRight.transform.localPosition.y);
 
-                Plugin.Instance.StartCoroutine(AssetUtility.MoveOverSeconds(laneCoverLeft, leftPos + new Vector2(711, 0), 0.2f));
-                Plugin.Instance.StartCoroutine(AssetUtility.MoveOverSeconds(laneCoverRight, rightPos - new Vector2(711, 0), 0.2f));
+                Plugin.Instance.StartCoroutine(OldAssetUtility.MoveOverSeconds(laneCoverLeft, leftPos + new Vector2(711, 0), 0.2f));
+                Plugin.Instance.StartCoroutine(OldAssetUtility.MoveOverSeconds(laneCoverRight, rightPos - new Vector2(711, 0), 0.2f));
                 DaniSoundManager.PlaySound(DaniDojoAudio.SeDaniPlayFusumaClose);
             }
 
@@ -211,8 +211,8 @@ namespace DaniDojo.Patches
 
             DaniDojoAssets.EnsoAssets.AdvanceSongPanel(DaniPlayManager.GetCurrentCourse(), DaniPlayManager.GetCurrentSongNumber());
 
-            Plugin.Instance.StartCoroutine(AssetUtility.ChangeTransparencyOverSeconds(laneSongTitle, 0, true));
-            Plugin.Instance.StartCoroutine(AssetUtility.ChangeTransparencyOverSeconds(laneSongSubtitle, 0, true));
+            Plugin.Instance.StartCoroutine(OldAssetUtility.ChangeTransparencyOverSeconds(laneSongTitle, 0, true));
+            Plugin.Instance.StartCoroutine(OldAssetUtility.ChangeTransparencyOverSeconds(laneSongSubtitle, 0, true));
 
             var wordDataManager = TaikoSingletonMonoBehaviour<CommonObjects>.Instance.MyDataManager.WordDataMgr;
             var songTitle = wordDataManager.GetWordListInfo("song_" + songId).Text;
@@ -229,16 +229,16 @@ namespace DaniDojo.Patches
             leftPos = new Vector2(laneCoverLeft.transform.localPosition.x, laneCoverLeft.transform.localPosition.y);
             rightPos = new Vector2(laneCoverRight.transform.localPosition.x, laneCoverRight.transform.localPosition.y);
 
-            Plugin.Instance.StartCoroutine(AssetUtility.MoveOverSeconds(laneCoverLeft, leftPos - new Vector2(711, 0), 0.2f));
-            Plugin.Instance.StartCoroutine(AssetUtility.MoveOverSeconds(laneCoverRight, rightPos + new Vector2(711, 0), 0.2f));
+            Plugin.Instance.StartCoroutine(OldAssetUtility.MoveOverSeconds(laneCoverLeft, leftPos - new Vector2(711, 0), 0.2f));
+            Plugin.Instance.StartCoroutine(OldAssetUtility.MoveOverSeconds(laneCoverRight, rightPos + new Vector2(711, 0), 0.2f));
 
             DaniSoundManager.PlaySound(DaniDojoAudio.SeDaniPlayFusumaOpen);
 
 
             yield return new WaitForSeconds(3);
 
-            Plugin.Instance.StartCoroutine(AssetUtility.ChangeTransparencyOverSeconds(laneSongTitle, 2, false));
-            Plugin.Instance.StartCoroutine(AssetUtility.ChangeTransparencyOverSeconds(laneSongSubtitle, 2, false));
+            Plugin.Instance.StartCoroutine(OldAssetUtility.ChangeTransparencyOverSeconds(laneSongTitle, 2, false));
+            Plugin.Instance.StartCoroutine(OldAssetUtility.ChangeTransparencyOverSeconds(laneSongSubtitle, 2, false));
 
             songInfoLayout.txt.text = songTitle;
             songInfoLayout.txtCenter.text = "";
@@ -266,9 +266,9 @@ namespace DaniDojo.Patches
 
             var ensoSceneObject = GameObject.Find("SceneEnsoGame");
 
-            var ensoPlayingParameterObj = AssetUtility.GetChildByName(ensoSceneObject, "EnsoPlayingParameter");
-            var ensoGameManagerObj = AssetUtility.GetChildByName(ensoSceneObject, "EnsoGameManager");
-            var fumenLoaderObj = AssetUtility.GetChildByName(ensoSceneObject, "FumenLoader");
+            var ensoPlayingParameterObj = OldAssetUtility.GetChildByName(ensoSceneObject, "EnsoPlayingParameter");
+            var ensoGameManagerObj = OldAssetUtility.GetChildByName(ensoSceneObject, "EnsoGameManager");
+            var fumenLoaderObj = OldAssetUtility.GetChildByName(ensoSceneObject, "FumenLoader");
             //var ensoGraphicManagerObj = AssetUtility.GetChildByName(ensoSceneObject, "EnsoGraphicManager");
             var ensoPlayingParameter = ensoPlayingParameterObj.GetComponent<EnsoPlayingParameter>();
             var ensoGameManager = ensoGameManagerObj.GetComponent<EnsoGameManager>();
@@ -317,8 +317,8 @@ namespace DaniDojo.Patches
                 yield return null;
             } while (ensoSceneObject == null);
 
-            var ensoPlayingParameterObj = AssetUtility.GetChildByName(ensoSceneObject, "EnsoPlayingParameter");
-            var ensoGameManagerObj = AssetUtility.GetChildByName(ensoSceneObject, "EnsoGameManager");
+            var ensoPlayingParameterObj = OldAssetUtility.GetChildByName(ensoSceneObject, "EnsoPlayingParameter");
+            var ensoGameManagerObj = OldAssetUtility.GetChildByName(ensoSceneObject, "EnsoGameManager");
 
             var ensoPlayingParameter = ensoPlayingParameterObj.GetComponent<EnsoPlayingParameter>();
             var ensoGameManager = ensoGameManagerObj.GetComponent<EnsoGameManager>();
@@ -430,7 +430,7 @@ namespace DaniDojo.Patches
                 DaniDojoParent.transform.parent = __instance.transform.parent.parent;
 
 
-                AssetUtility.AddCanvasComponent(DaniDojoParent);
+                OldAssetUtility.AddCanvasComponent(DaniDojoParent);
 
                 var daniDojoCanvas = DaniDojoParent.GetComponent<Canvas>();
                 var baseCanvas = CanvasBg.GetComponent<Canvas>();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DaniDojo.DaniCourseSelect.Assets;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace DaniDojo.DaniCourseSelect.Views
 {
-    internal class SelectionManager
+    internal class SelectionManager : MonoBehaviour
     {
 #if IL2CPP
         static SelectionManager() => ClassInjector.RegisterTypeInIl2Cpp<SelectionManager>();
@@ -18,6 +19,10 @@ namespace DaniDojo.DaniCourseSelect.Views
         private Coroutine topCourseDropDownAnimation;
 
 
+        public void Initialize(CourseSelectSceneController newParent)
+        {
+            parent = newParent;
+        }
 
         public void StartTopCourseDropDown()
         {

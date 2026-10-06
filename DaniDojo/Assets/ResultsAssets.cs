@@ -16,7 +16,7 @@ namespace DaniDojo.Assets
     {
         static public GameObject CreateBg(GameObject parent)
         {
-            return AssetUtility.CreateImageChild(parent, "DaniResultBg", new Vector2(0, 0), Path.Combine("Results", "Background.png"));
+            return OldAssetUtility.CreateImageChild(parent, "DaniResultBg", new Vector2(0, 0), Path.Combine("Results", "Background.png"));
         }
 
         static public GameObject CreateCourseIcon(GameObject parent, DaniCourse course)
@@ -33,7 +33,7 @@ namespace DaniDojo.Assets
 
         static public GameObject CreateSongPanel(GameObject parent)
         {
-            var songBg = AssetUtility.CreateImageChild(parent, "SongMainBg", new Vector2(352, 69), Path.Combine("Results", "SongsWoodBackground.png"));
+            var songBg = OldAssetUtility.CreateImageChild(parent, "SongMainBg", new Vector2(352, 69), Path.Combine("Results", "SongsWoodBackground.png"));
             //CreateEachSongBg(songBg);
             return songBg;
         }
@@ -43,10 +43,10 @@ namespace DaniDojo.Assets
             var songPanels = new List<GameObject>();
             for (int i = 0; i < Math.Min(course.Songs.Count, 3); i++)
             {
-                var songBg = AssetUtility.CreateImageChild(parent, "SongBg", GetSongPanelPosition(i, toSlideIn), Path.Combine("Results", "SongBg.png"));
-                var songPanel = AssetUtility.CreateImageChild(songBg, "SongPanel" + i, new Vector2(38, 119), Path.Combine("Results", "SongPanel.png"));
+                var songBg = OldAssetUtility.CreateImageChild(parent, "SongBg", GetSongPanelPosition(i, toSlideIn), Path.Combine("Results", "SongBg.png"));
+                var songPanel = OldAssetUtility.CreateImageChild(songBg, "SongPanel" + i, new Vector2(38, 119), Path.Combine("Results", "SongPanel.png"));
 
-                AssetUtility.CreateImageChild(songPanel, "SongIndicator", new Vector2(10, 10), Path.Combine("Results", "SongIndicator" + (i + 1) + ".png"));
+                OldAssetUtility.CreateImageChild(songPanel, "SongIndicator", new Vector2(10, 10), Path.Combine("Results", "SongIndicator" + (i + 1) + ".png"));
 
                 CommonAssets.CreateSongCourseChild(songPanel, new Vector2(112, 42), course.Songs[i]);
                 CommonAssets.CreateSongLevelChild(songPanel, new Vector2(121, 15), course.Songs[i]);
@@ -57,13 +57,13 @@ namespace DaniDojo.Assets
                 int valuesX = 136;
                 int valuesY = 37;
                 int valuesInterval = 317;
-                var songGoodsPanel = AssetUtility.CreateImageChild(songBg, "SongGoodsPanel", new Vector2(valuesX, valuesY), Path.Combine("Results", "SongGoodsBg.png"));
+                var songGoodsPanel = OldAssetUtility.CreateImageChild(songBg, "SongGoodsPanel", new Vector2(valuesX, valuesY), Path.Combine("Results", "SongGoodsBg.png"));
                 valuesX += valuesInterval;
-                var songOksPanel = AssetUtility.CreateImageChild(songBg, "SongOksPanel", new Vector2(valuesX, valuesY), Path.Combine("Results", "SongOksBg.png"));
+                var songOksPanel = OldAssetUtility.CreateImageChild(songBg, "SongOksPanel", new Vector2(valuesX, valuesY), Path.Combine("Results", "SongOksBg.png"));
                 valuesX += valuesInterval;
-                var songBadsPanel = AssetUtility.CreateImageChild(songBg, "SongBadsPanel", new Vector2(valuesX, valuesY), Path.Combine("Results", "SongBadsBg.png"));
+                var songBadsPanel = OldAssetUtility.CreateImageChild(songBg, "SongBadsPanel", new Vector2(valuesX, valuesY), Path.Combine("Results", "SongBadsBg.png"));
                 valuesX += valuesInterval;
-                var songDrumrollsPanel = AssetUtility.CreateImageChild(songBg, "SongDrumrollPanel", new Vector2(valuesX, valuesY), Path.Combine("Results", "SongDrumrollBg.png"));
+                var songDrumrollsPanel = OldAssetUtility.CreateImageChild(songBg, "SongDrumrollPanel", new Vector2(valuesX, valuesY), Path.Combine("Results", "SongDrumrollBg.png"));
 
                 var goods = play.SongPlayData[i].Goods.ToString();
                 var oks = play.SongPlayData[i].Oks.ToString();
@@ -111,21 +111,21 @@ namespace DaniDojo.Assets
 
         static public GameObject CreatePlayRecordBg(GameObject parent)
         {
-            var playRecordBg = AssetUtility.CreateImageChild(parent, "PlayRecord", new Vector2(337 + 1920, 44), Path.Combine("Results", "PlayResultsBackground.png"));
+            var playRecordBg = OldAssetUtility.CreateImageChild(parent, "PlayRecord", new Vector2(337 + 1920, 44), Path.Combine("Results", "PlayResultsBackground.png"));
             return playRecordBg;
         }
 
         static public GameObject CreatePlayRecordScoreBg(GameObject parent, PlayData play)
         {
-            var scoreBg = AssetUtility.CreateImageChild(parent, "ScoreBg", new Vector2(128, 752), Path.Combine("Results", "PlayScoreBg.png"));
+            var scoreBg = OldAssetUtility.CreateImageChild(parent, "ScoreBg", new Vector2(128, 752), Path.Combine("Results", "PlayScoreBg.png"));
 
-            var textObject = AssetUtility.CreateTextChild(scoreBg, "ScoreBgText", new Rect(74, 102, 300, 40), "Score");
-            AssetUtility.SetTextAlignment(textObject, HorizontalAlignmentOptions.Center);
+            var textObject = OldAssetUtility.CreateTextChild(scoreBg, "ScoreBgText", new Rect(74, 102, 300, 40), "Score");
+            OldAssetUtility.SetTextAlignment(textObject, HorizontalAlignmentOptions.Center);
 
             FontTMPManager fontTMPMgr = TaikoSingletonMonoBehaviour<CommonObjects>.Instance.MyDataManager.FontTMPMgr;
             TMP_FontAsset scoreFont = fontTMPMgr.GetDefaultFontAsset(DataConst.FontType.EFIGS);
             Material scoreFontMaterial = fontTMPMgr.GetDefaultFontMaterial(DataConst.FontType.EFIGS, DataConst.DefaultFontMaterialType.KanbanPops);
-            AssetUtility.SetTextFontAndMaterial(textObject, scoreFont, scoreFontMaterial);
+            OldAssetUtility.SetTextFontAndMaterial(textObject, scoreFont, scoreFontMaterial);
 
 
             // Slightly difficult, looks like the score is centered
@@ -141,7 +141,7 @@ namespace DaniDojo.Assets
             for (int i = 0; i < score.Length; i++)
             {
                 Vector2 digitPosition = basePosition + new Vector2(digitWidth * i, 0);
-                var digitObject = AssetUtility.CreateEmptyObject(scoreBg, "Score" + (score.Length - (i + 1)), digitPosition);
+                var digitObject = OldAssetUtility.CreateEmptyObject(scoreBg, "Score" + (score.Length - (i + 1)), digitPosition);
                 CommonAssets.CreateDigit(digitObject, "Shadow", Vector2.zero, DigitType.ResultsScoreShadow, score[i]);
                 CommonAssets.CreateDigit(digitObject, "Fill", Vector2.zero, DigitType.ResultsScore, score[i]);
             }
@@ -151,7 +151,7 @@ namespace DaniDojo.Assets
 
         static public GameObject CreatePlayRecordGoodOkBad(GameObject parent, PlayData play)
         {
-            var playRecordBg = AssetUtility.CreateImageChild(parent, "PlayRecordBg1", new Vector2(571, 696), Path.Combine("Results", "PlayRecord1.png"));
+            var playRecordBg = OldAssetUtility.CreateImageChild(parent, "PlayRecordBg1", new Vector2(571, 696), Path.Combine("Results", "PlayRecord1.png"));
 
             var goods = play.SongPlayData.Sum((x) => x.Goods).ToString();
             var oks = play.SongPlayData.Sum((x) => x.Oks).ToString();
@@ -179,7 +179,7 @@ namespace DaniDojo.Assets
 
         static public GameObject CreatePlayRecordDrumrollComboTotalHits(GameObject parent, PlayData play)
         {
-            var playRecordBg = AssetUtility.CreateImageChild(parent, "PlayRecordBg2", new Vector2(955, 696), Path.Combine("Results", "PlayRecord2.png"));
+            var playRecordBg = OldAssetUtility.CreateImageChild(parent, "PlayRecordBg2", new Vector2(955, 696), Path.Combine("Results", "PlayRecord2.png"));
 
             var drumroll = play.SongPlayData.Sum((x) => x.Drumroll).ToString();
             var combo = play.MaxCombo.ToString();
@@ -207,7 +207,7 @@ namespace DaniDojo.Assets
 
         static public GameObject CreateDanResult(GameObject parent, PlayData play)
         {
-            var danResultParent = AssetUtility.CreateEmptyObject(parent, "DanResult", new Vector2(7, 350));
+            var danResultParent = OldAssetUtility.CreateEmptyObject(parent, "DanResult", new Vector2(7, 350));
 
 
             string comboAsset = "";
@@ -232,33 +232,33 @@ namespace DaniDojo.Assets
 
             if (isFailed)
             {
-                AssetUtility.CreateImageChild(danResultParent, "FailShadow1", new Vector2(3, 55), Path.Combine("Results", "DaniResult", "ResultFailShadow1.png"));
-                AssetUtility.CreateImageChild(danResultParent, "FailShadow2", new Vector2(109, -14), Path.Combine("Results", "DaniResult", "ResultFailShadow2.png"));
-                AssetUtility.CreateImageChild(danResultParent, "FailShadow3", new Vector2(232, 21), Path.Combine("Results", "DaniResult", "ResultFailShadow3.png"));
+                OldAssetUtility.CreateImageChild(danResultParent, "FailShadow1", new Vector2(3, 55), Path.Combine("Results", "DaniResult", "ResultFailShadow1.png"));
+                OldAssetUtility.CreateImageChild(danResultParent, "FailShadow2", new Vector2(109, -14), Path.Combine("Results", "DaniResult", "ResultFailShadow2.png"));
+                OldAssetUtility.CreateImageChild(danResultParent, "FailShadow3", new Vector2(232, 21), Path.Combine("Results", "DaniResult", "ResultFailShadow3.png"));
 
-                AssetUtility.CreateImageChild(danResultParent, "FailBg1", new Vector2(15, 78), Path.Combine("Results", "DaniResult", "ResultFailBackground1.png"));
-                AssetUtility.CreateImageChild(danResultParent, "FailBg2", new Vector2(123, 9), Path.Combine("Results", "DaniResult", "ResultFailBackground2.png"));
-                AssetUtility.CreateImageChild(danResultParent, "FailBg3", new Vector2(245, 43), Path.Combine("Results", "DaniResult", "ResultFailBackground3.png"));
+                OldAssetUtility.CreateImageChild(danResultParent, "FailBg1", new Vector2(15, 78), Path.Combine("Results", "DaniResult", "ResultFailBackground1.png"));
+                OldAssetUtility.CreateImageChild(danResultParent, "FailBg2", new Vector2(123, 9), Path.Combine("Results", "DaniResult", "ResultFailBackground2.png"));
+                OldAssetUtility.CreateImageChild(danResultParent, "FailBg3", new Vector2(245, 43), Path.Combine("Results", "DaniResult", "ResultFailBackground3.png"));
 
-                AssetUtility.CreateImageChild(danResultParent, "FailOutline1", new Vector2(19, 76), Path.Combine("Results", "DaniResult", "ResultFailOutline1.png"));
-                AssetUtility.CreateImageChild(danResultParent, "FailOutline2", new Vector2(127, 7), Path.Combine("Results", "DaniResult", "ResultFailOutline2.png"));
-                AssetUtility.CreateImageChild(danResultParent, "FailOutline3", new Vector2(248, 41), Path.Combine("Results", "DaniResult", "ResultFailOutline3.png"));
+                OldAssetUtility.CreateImageChild(danResultParent, "FailOutline1", new Vector2(19, 76), Path.Combine("Results", "DaniResult", "ResultFailOutline1.png"));
+                OldAssetUtility.CreateImageChild(danResultParent, "FailOutline2", new Vector2(127, 7), Path.Combine("Results", "DaniResult", "ResultFailOutline2.png"));
+                OldAssetUtility.CreateImageChild(danResultParent, "FailOutline3", new Vector2(248, 41), Path.Combine("Results", "DaniResult", "ResultFailOutline3.png"));
 
-                AssetUtility.CreateImageChild(danResultParent, "FailText1", new Vector2(32, 93), Path.Combine("Results", "DaniResult", "ResultFailText1.png"));
-                AssetUtility.CreateImageChild(danResultParent, "FailText2", new Vector2(140, 26), Path.Combine("Results", "DaniResult", "ResultFailText2.png"));
-                AssetUtility.CreateImageChild(danResultParent, "FailText3", new Vector2(261, 60), Path.Combine("Results", "DaniResult", "ResultFailText3.png"));
+                OldAssetUtility.CreateImageChild(danResultParent, "FailText1", new Vector2(32, 93), Path.Combine("Results", "DaniResult", "ResultFailText1.png"));
+                OldAssetUtility.CreateImageChild(danResultParent, "FailText2", new Vector2(140, 26), Path.Combine("Results", "DaniResult", "ResultFailText2.png"));
+                OldAssetUtility.CreateImageChild(danResultParent, "FailText3", new Vector2(261, 60), Path.Combine("Results", "DaniResult", "ResultFailText3.png"));
             }
             else
             {
-                AssetUtility.CreateImageChild(danResultParent, "ComboBg", new Vector2(0, 0), Path.Combine("Results", "DaniResult", comboAsset));
-                AssetUtility.CreateImageChild(danResultParent, "Rank", new Vector2(21, 39), Path.Combine("Results", "DaniResult", resultAsset));
+                OldAssetUtility.CreateImageChild(danResultParent, "ComboBg", new Vector2(0, 0), Path.Combine("Results", "DaniResult", comboAsset));
+                OldAssetUtility.CreateImageChild(danResultParent, "Rank", new Vector2(21, 39), Path.Combine("Results", "DaniResult", resultAsset));
             }
             return danResultParent;
         }
 
         static public GameObject CreateBorderPanels(GameObject parent, DaniCourse course, PlayData play)
         {
-            var borderPanels = AssetUtility.CreateEmptyObject(parent, "BorderPanels", new Vector2(0, 0));
+            var borderPanels = OldAssetUtility.CreateEmptyObject(parent, "BorderPanels", new Vector2(0, 0));
 
             for (int i = 0; i < course.Borders.Count; i++)
             {
@@ -270,9 +270,9 @@ namespace DaniDojo.Assets
 
         static public GameObject CreateBorderPanel(GameObject parent, string name, Vector2 position, DaniBorder border, PlayData play)
         {
-            var borderPanel = AssetUtility.CreateEmptyObject(parent, name, position);
+            var borderPanel = OldAssetUtility.CreateEmptyObject(parent, name, position);
 
-            var borderPanelBg = AssetUtility.CreateImageChild(borderPanel, "BorderBg", new Vector2(0, 0), Path.Combine("Results", "BorderResultsPanel.png"));
+            var borderPanelBg = OldAssetUtility.CreateImageChild(borderPanel, "BorderBg", new Vector2(0, 0), Path.Combine("Results", "BorderResultsPanel.png"));
 
             var fontManager = GameObject.Find("FontTMPManager").GetComponent<FontTMPManager>();
             TMP_FontAsset reqTypefont = fontManager.GetDefaultFontAsset(DataConst.FontType.EFIGS);
@@ -307,9 +307,9 @@ namespace DaniDojo.Assets
                 default:
                     break;
             }
-            var requirementTypeText = AssetUtility.CreateTextChild(borderPanel, "BorderReqText", new Rect(24, 109, 334, 36), requirementText);
-            AssetUtility.SetTextFontAndMaterial(requirementTypeText, reqTypefont, reqTypeFontMaterial);
-            AssetUtility.SetTextAlignment(requirementTypeText, HorizontalAlignmentOptions.Center);
+            var requirementTypeText = OldAssetUtility.CreateTextChild(borderPanel, "BorderReqText", new Rect(24, 109, 334, 36), requirementText);
+            OldAssetUtility.SetTextFontAndMaterial(requirementTypeText, reqTypefont, reqTypeFontMaterial);
+            OldAssetUtility.SetTextAlignment(requirementTypeText, HorizontalAlignmentOptions.Center);
 
 
 
@@ -319,11 +319,11 @@ namespace DaniDojo.Assets
 
             if (border.BorderType == BorderType.SoulGauge)
             {
-                AssetUtility.CreateImageChild(borderPanel, "SongNumIndicator", new Vector2(28, 30), Path.Combine("Enso", "CurSongIndicatorTotal.png"));
+                OldAssetUtility.CreateImageChild(borderPanel, "SongNumIndicator", new Vector2(28, 30), Path.Combine("Enso", "CurSongIndicatorTotal.png"));
 
-                var soulGauge = AssetUtility.CreateEmptyObject(borderPanel, "SoulGauge", new Vector2(50, 20));
-                var soulGaugeBg = AssetUtility.CreateImageChild(soulGauge, "SoulGaugeBg", new Vector2(75, 8), Path.Combine("SoulGauge", "ResultsSoulGaugeBg.png"));
-                var soulGaugeSeparators = AssetUtility.CreateImageChild(soulGauge, "SoulGaugeSeparators", new Vector2(131, 21), Path.Combine("SoulGauge", "SoulGaugeBarSeparators.png"));
+                var soulGauge = OldAssetUtility.CreateEmptyObject(borderPanel, "SoulGauge", new Vector2(50, 20));
+                var soulGaugeBg = OldAssetUtility.CreateImageChild(soulGauge, "SoulGaugeBg", new Vector2(75, 8), Path.Combine("SoulGauge", "ResultsSoulGaugeBg.png"));
+                var soulGaugeSeparators = OldAssetUtility.CreateImageChild(soulGauge, "SoulGaugeSeparators", new Vector2(131, 21), Path.Combine("SoulGauge", "SoulGaugeBarSeparators.png"));
             }
             else if (border.IsTotal)
             {
@@ -348,7 +348,7 @@ namespace DaniDojo.Assets
             }
 
             // Create SongNumIndicator (Always Total for this panel)
-            AssetUtility.CreateImageChild(parent, "SongNumIndicator", new Vector2(28, 30), Path.Combine("Enso", "CurSongIndicatorTotal.png"));
+            OldAssetUtility.CreateImageChild(parent, "SongNumIndicator", new Vector2(28, 30), Path.Combine("Enso", "CurSongIndicatorTotal.png"));
 
 
             // Create the requirement value string
@@ -367,21 +367,21 @@ namespace DaniDojo.Assets
             TMP_FontAsset reqValuefont = fontManager.GetDescriptionFontAsset(DataConst.FontType.EFIGS);
             Material reqValueFontMaterial = fontManager.GetDescriptionFontMaterial(DataConst.FontType.EFIGS, DataConst.DescriptionFontMaterialType.OutlineSongInfo);
 
-            var requirementTypeText = AssetUtility.CreateTextChild(parent, "RequirementValue", new Rect(28, 36, 334, 46), requirementValueString);
-            AssetUtility.SetTextFontAndMaterial(requirementTypeText, reqValuefont, reqValueFontMaterial);
-            AssetUtility.SetTextAlignment(requirementTypeText, HorizontalAlignmentOptions.Right);
+            var requirementTypeText = OldAssetUtility.CreateTextChild(parent, "RequirementValue", new Rect(28, 36, 334, 46), requirementValueString);
+            OldAssetUtility.SetTextFontAndMaterial(requirementTypeText, reqValuefont, reqValueFontMaterial);
+            OldAssetUtility.SetTextAlignment(requirementTypeText, HorizontalAlignmentOptions.Right);
 
 
 
             // Create the requirement bars
             var barData = DaniPlayManager.GetBorderBarData(border, play, remainingNotes: 0, endOfCourse: true);
-            var bar = AssetUtility.CreateEmptyObject(parent, "RequirementBar", new Vector2(13, -4));
+            var bar = OldAssetUtility.CreateEmptyObject(parent, "RequirementBar", new Vector2(13, -4));
 
             var curReqBarImagePath = Path.Combine("Enso", "Bars", "RequirementBarTotal.png");
             var curReqBarBorderImagePath = Path.Combine("Enso", "Bars", "RequirementBarBorderTotal.png");
 
             Vector2 barPositions = new Vector2(389, 20);
-            AssetUtility.CreateImageChild(bar, "CurReqBar", barPositions, Path.Combine(curReqBarImagePath));
+            OldAssetUtility.CreateImageChild(bar, "CurReqBar", barPositions, Path.Combine(curReqBarImagePath));
 
             Rect fillBarRect = new Rect(396, 36, 966, 80);
             Rect emptyBarRect = new Rect(396 + 966, 36, 966, 80);
@@ -389,12 +389,12 @@ namespace DaniDojo.Assets
 
             //ModLogger.Log("barData.FillRatio: " + barData.FillRatio);
 
-            var fillBar = AssetUtility.CreateImageChild(bar, "CurReqBarFill", fillBarRect, barData.Color);
+            var fillBar = OldAssetUtility.CreateImageChild(bar, "CurReqBarFill", fillBarRect, barData.Color);
             var colorLerp = fillBar.AddComponent<ColorLerp>();
-            var emptyBar = AssetUtility.CreateImageChild(bar, "CurReqBarEmpty", emptyBarRect, BorderBarColors.BorderBarColor[BorderBarState.Grey]);
-            AssetUtility.CreateImageChild(bar, "CurReqBarBorder", barPositions, Path.Combine(curReqBarBorderImagePath));
+            var emptyBar = OldAssetUtility.CreateImageChild(bar, "CurReqBarEmpty", emptyBarRect, BorderBarColors.BorderBarColor[BorderBarState.Grey]);
+            OldAssetUtility.CreateImageChild(bar, "CurReqBarBorder", barPositions, Path.Combine(curReqBarBorderImagePath));
 
-            var fillBarImage = AssetUtility.GetOrAddImageComponent(fillBar);
+            var fillBarImage = OldAssetUtility.GetOrAddImageComponent(fillBar);
 
             var newScale = emptyBar.transform.localScale;
             newScale.x = barData.FillRatio / 100f;
@@ -441,8 +441,8 @@ namespace DaniDojo.Assets
             for (int i = 0; i < Math.Min(3, play.SongReached); i++)
             {
                 // Create SongNumIndicator
-                var songPanel = AssetUtility.CreateEmptyObject(parent, "Song" + (i + 1), new Vector2(0 + (i * 465), 0));
-                AssetUtility.CreateImageChild(songPanel, "SongNumIndicator", new Vector2(28, 30), Path.Combine("Enso", "CurSongIndicator" + (i + 1) + ".png"));
+                var songPanel = OldAssetUtility.CreateEmptyObject(parent, "Song" + (i + 1), new Vector2(0 + (i * 465), 0));
+                OldAssetUtility.CreateImageChild(songPanel, "SongNumIndicator", new Vector2(28, 30), Path.Combine("Enso", "CurSongIndicator" + (i + 1) + ".png"));
 
 
 
@@ -453,25 +453,25 @@ namespace DaniDojo.Assets
                 // Create the requirement bars
 
                 var barData = DaniPlayManager.GetBorderBarData(border, play, songNumber: i, remainingNotes: 0, endOfCourse: true);
-                var bar = AssetUtility.CreateEmptyObject(songPanel, "RequirementBar", new Vector2(-264, 13));
+                var bar = OldAssetUtility.CreateEmptyObject(songPanel, "RequirementBar", new Vector2(-264, 13));
 
                 Vector2 barPosition = new Vector2(389, 15);
-                AssetUtility.CreateImageChild(bar, "CurReqBar", barPosition, Path.Combine("Results", "ResultsBorderFillSmall.png"));
+                OldAssetUtility.CreateImageChild(bar, "CurReqBar", barPosition, Path.Combine("Results", "ResultsBorderFillSmall.png"));
 
                 Rect fillBarRect = new Rect(393, 24, 322, 41);
-                var fillBar = AssetUtility.CreateImageChild(bar, "CurReqBarFill", fillBarRect, barData.Color);
+                var fillBar = OldAssetUtility.CreateImageChild(bar, "CurReqBarFill", fillBarRect, barData.Color);
                 var colorLerp = fillBar.AddComponent<ColorLerp>();
 
                 Rect emptyBarRect = new Rect(394 + 322, 24, 322, 41);
-                var emptyBar = AssetUtility.CreateImageChild(bar, "CurReqBarEmpty", emptyBarRect, BorderBarColors.BorderBarColor[BorderBarState.Grey]);
+                var emptyBar = OldAssetUtility.CreateImageChild(bar, "CurReqBarEmpty", emptyBarRect, BorderBarColors.BorderBarColor[BorderBarState.Grey]);
 
                 Vector2 borderBarRect = new Vector2(389, 22);
-                AssetUtility.CreateImageChild(bar, "CurReqBarBorder", borderBarRect, Path.Combine("Results", "ResultsBorderSmall.png"));
+                OldAssetUtility.CreateImageChild(bar, "CurReqBarBorder", borderBarRect, Path.Combine("Results", "ResultsBorderSmall.png"));
 
 
                 //ModLogger.Log("barData.FillRatio: " + barData.FillRatio);
 
-                var fillBarImage = AssetUtility.GetOrAddImageComponent(fillBar);
+                var fillBarImage = OldAssetUtility.GetOrAddImageComponent(fillBar);
 
                 var newScale = emptyBar.transform.localScale;
                 newScale.x = barData.FillRatio / 100f;
@@ -515,9 +515,9 @@ namespace DaniDojo.Assets
                 TMP_FontAsset reqValuefont = fontManager.GetDescriptionFontAsset(DataConst.FontType.EFIGS);
                 Material reqValueFontMaterial = fontManager.GetDescriptionFontMaterial(DataConst.FontType.EFIGS, DataConst.DescriptionFontMaterialType.OutlineSongInfo);
 
-                var requirementTypeText = AssetUtility.CreateTextChild(songPanel, "RequirementValue", new Rect(111, 20, 334, 26), requirementValueString);
-                AssetUtility.SetTextFontAndMaterial(requirementTypeText, reqValuefont, reqValueFontMaterial);
-                AssetUtility.SetTextAlignment(requirementTypeText, HorizontalAlignmentOptions.Right);
+                var requirementTypeText = OldAssetUtility.CreateTextChild(songPanel, "RequirementValue", new Rect(111, 20, 334, 26), requirementValueString);
+                OldAssetUtility.SetTextFontAndMaterial(requirementTypeText, reqValuefont, reqValueFontMaterial);
+                OldAssetUtility.SetTextAlignment(requirementTypeText, HorizontalAlignmentOptions.Right);
 
             }
 

@@ -93,8 +93,7 @@ namespace DaniDojo.Hooks
                 GameObject ResultsParent = GameObject.Find("DaniResults");
                 if (ResultsParent == null)
                 {
-                    ResultsParent = AssetUtility.CreateEmptyObject(null, "DaniResults", Vector2.zero);
-                    AssetUtility.AddCanvasComponent(ResultsParent);
+                    ResultsParent = AssetUtility.CreateRootCanvas("DaniResults").gameObject;
                 }
                 DaniResultsPlayer resultsPlayer = ResultsParent.GetComponent<DaniResultsPlayer>();
                 if (resultsPlayer == null)

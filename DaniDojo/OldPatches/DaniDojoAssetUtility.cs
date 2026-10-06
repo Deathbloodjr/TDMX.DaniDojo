@@ -69,7 +69,7 @@ namespace DaniDojo.Patches
             //imageCanvas.worldCamera = parentCanvas.worldCamera;
             //imageCanvas.renderMode = parentCanvas.renderMode;
 
-            var sprite = AssetUtility.LoadSprite(filePath);
+            var sprite = OldAssetUtility.LoadSprite(filePath);
             return CreateImage(name, sprite, location, parent);
         }
         public static GameObject CreateImage(string name, Sprite sprite, Vector2 location, Transform parent)
@@ -146,7 +146,7 @@ namespace DaniDojo.Patches
             {
                 var laneImage = gameObject.GetComponentInChildren<Image>();
 
-                var newSprite = AssetUtility.LoadSprite(newImageFilePath);
+                var newSprite = OldAssetUtility.LoadSprite(newImageFilePath);
 
                 if (laneImage != null && laneImage.sprite != null)
                 {
@@ -197,7 +197,7 @@ namespace DaniDojo.Patches
             }
             var image = obj.GetComponent<Image>();
 
-            image.sprite = AssetUtility.LoadSprite(filePath);
+            image.sprite = OldAssetUtility.LoadSprite(filePath);
         }
 
         public static void ChangeImageSprite(GameObject obj, Sprite sprite)

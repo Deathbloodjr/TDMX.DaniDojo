@@ -63,7 +63,7 @@ namespace DaniDojo.Assets
             GameObject daniDojoObj = null;
             if (daniDojoIconTransform == null)
             {
-                daniDojoObj = AssetUtility.CreateEmptyObject(kanban.gameObject, "DaniDojoUnselectedIcon", new Vector2(-70, 30));
+                daniDojoObj = OldAssetUtility.CreateEmptyObject(kanban.gameObject, "DaniDojoUnselectedIcon", new Vector2(-70, 30));
                 var scale = 0.751f;
                 daniDojoObj.transform.localScale = new Vector2(scale, scale);
             }
@@ -82,9 +82,9 @@ namespace DaniDojo.Assets
                 var diffName = GetDifficultyFromSongLevel(course.songLevel);
                 var textName = GetTextImageNameFromCourseLevel(course.courseLevel);
 
-                var bgImageObj = AssetUtility.GetOrCreateImageChild(daniDojoObj, "DaniDojoUnselectedBg", new Vector2(0, 0), Path.Combine("SongSelect", "Unselected", "Backgrounds", imageName));
-                var diffObj = AssetUtility.GetOrCreateImageChild(daniDojoObj, "DaniDojoUnselectedDiff", new Vector2(19, 17), Path.Combine("SongSelect", "Unselected", "Difficulties", diffName));
-                var textObj = AssetUtility.GetOrCreateImageChild(daniDojoObj, "DaniDojoUnselectedText", new Vector2(18, 55), Path.Combine("SongSelect", "Unselected", "Text", textName));
+                var bgImageObj = OldAssetUtility.GetOrCreateImageChild(daniDojoObj, "DaniDojoUnselectedBg", new Vector2(0, 0), Path.Combine("SongSelect", "Unselected", "Backgrounds", imageName));
+                var diffObj = OldAssetUtility.GetOrCreateImageChild(daniDojoObj, "DaniDojoUnselectedDiff", new Vector2(19, 17), Path.Combine("SongSelect", "Unselected", "Difficulties", diffName));
+                var textObj = OldAssetUtility.GetOrCreateImageChild(daniDojoObj, "DaniDojoUnselectedText", new Vector2(18, 55), Path.Combine("SongSelect", "Unselected", "Text", textName));
             }
             else
             {
@@ -104,7 +104,7 @@ namespace DaniDojo.Assets
             GameObject daniDojoObj = null;
             if (daniDojoIconTransform == null)
             {
-                daniDojoObj = AssetUtility.CreateEmptyObject(kanban.gameObject, "DaniDojoSelectedIcon", new Vector2(364, 190));
+                daniDojoObj = OldAssetUtility.CreateEmptyObject(kanban.gameObject, "DaniDojoSelectedIcon", new Vector2(364, 190));
                 var scale = 0.751f;
                 daniDojoObj.transform.localScale = new Vector2(scale, scale);
             }
@@ -123,9 +123,9 @@ namespace DaniDojo.Assets
                 var diffName = GetDifficultyFromSongLevel(course.songLevel);
                 var textName = GetTextImageNameFromCourseLevel(course.courseLevel);
 
-                var bgImageObj = AssetUtility.GetOrCreateImageChild(daniDojoObj, "DaniDojoSelectedBg", new Vector2(0, 0), Path.Combine("SongSelect", "Selected", "Backgrounds", imageName));
-                var diffObj = AssetUtility.GetOrCreateImageChild(daniDojoObj, "DaniDojoSelectedDiff", new Vector2(146, 42), Path.Combine("SongSelect", "Selected", "Difficulties", diffName));
-                var textObj = AssetUtility.GetOrCreateImageChild(daniDojoObj, "DaniDojoSelectedText", new Vector2(56, 46), Path.Combine("SongSelect", "Selected", "Text", textName));
+                var bgImageObj = OldAssetUtility.GetOrCreateImageChild(daniDojoObj, "DaniDojoSelectedBg", new Vector2(0, 0), Path.Combine("SongSelect", "Selected", "Backgrounds", imageName));
+                var diffObj = OldAssetUtility.GetOrCreateImageChild(daniDojoObj, "DaniDojoSelectedDiff", new Vector2(146, 42), Path.Combine("SongSelect", "Selected", "Difficulties", diffName));
+                var textObj = OldAssetUtility.GetOrCreateImageChild(daniDojoObj, "DaniDojoSelectedText", new Vector2(56, 46), Path.Combine("SongSelect", "Selected", "Text", textName));
             }
             else
             {
@@ -210,24 +210,24 @@ namespace DaniDojo.Assets
             var courseSelectObject = GameObject.Find("CourseSelect");
             if (courseSelectObject != null)
             {
-                var songSelectCourse = AssetUtility.GetChildByName(courseSelectObject, "SongSelectCourse");
+                var songSelectCourse = OldAssetUtility.GetChildByName(courseSelectObject, "SongSelectCourse");
                 if (songSelectCourse != null)
                 {
-                    var kanban = AssetUtility.GetChildByName(songSelectCourse, "Kanban");
+                    var kanban = OldAssetUtility.GetChildByName(songSelectCourse, "Kanban");
                     if (kanban != null)
                     {
-                        var diffcourse = AssetUtility.GetChildByName(kanban, "DiffCourse");
+                        var diffcourse = OldAssetUtility.GetChildByName(kanban, "DiffCourse");
                         if (diffcourse != null)
                         {
                             for (int i = 1; i < 6; i++)
                             {
-                                var btnDiffCourse = AssetUtility.GetChildByName(diffcourse, "BtnDiffCourse" + i);
+                                var btnDiffCourse = OldAssetUtility.GetChildByName(diffcourse, "BtnDiffCourse" + i);
                                 if (btnDiffCourse != null)
                                 {
                                     var level = (EnsoData.EnsoLevelType)(i - 1);
                                     if (!CourseButtonObjects.ContainsKey(level))
                                     {
-                                        CourseButtonObjects.Add(level, AssetUtility.GetChildByName(btnDiffCourse, "DiffCourse"));
+                                        CourseButtonObjects.Add(level, OldAssetUtility.GetChildByName(btnDiffCourse, "DiffCourse"));
                                     }
                                 }
                             }
@@ -250,7 +250,7 @@ namespace DaniDojo.Assets
 
             foreach (var button in courseButtonObjects)
             {
-                var daniDojoParent = AssetUtility.GetOrCreateEmptyChild(button.Value, "DaniDojoIcon", new Vector2(148, 169));
+                var daniDojoParent = OldAssetUtility.GetOrCreateEmptyChild(button.Value, "DaniDojoIcon", new Vector2(148, 169));
                 var scale = 0.751f;
                 daniDojoParent.transform.localScale = new Vector2(scale, scale);
                 var icon = daniDojoParent.GetOrAddComponent<DaniDojoCourseSelectIcon>();

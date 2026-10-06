@@ -102,5 +102,28 @@ namespace DaniDojo.Assets.Animation
             color.a = targetAlpha;
             image.color = color;
         }
+
+        public static IEnumerator ColorRoutine(this Image image, Color targetColor, float duration, Func<float, float> easing = null)
+        {
+            easing ??= Easing.Linear;
+            Color color = image.color;
+            float startR = color.r;
+            float startG = color.g;
+            float startB = color.b;
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = easing(Mathf.Clamp01(elapsed / duration));
+                color.r = Mathf.Lerp(startR, targetColor.r, t);
+                color.g = Mathf.Lerp(startG, targetColor.g, t);
+                color.b = Mathf.Lerp(startB, targetColor.b, t);
+                image.color = color;
+                yield return null;
+            }
+
+            image.color = targetColor;
+        }
     }
 }

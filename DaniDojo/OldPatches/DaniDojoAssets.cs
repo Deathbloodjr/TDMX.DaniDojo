@@ -80,7 +80,7 @@ namespace DaniDojo.Patches
                 {
                     gameObject = GameObject.Find("icon_course");
                 }
-                AssetUtility.ChangeImageSprite(gameObject, Path.Combine("Course", "DifficultyIcons", "DaniDojoResized.png"));
+                OldAssetUtility.ChangeImageSprite(gameObject, Path.Combine("Course", "DifficultyIcons", "DaniDojoResized.png"));
                 //DaniDojoAssetUtility.ChangeSprite(gameObject, Path.Combine(BaseImageFilePath, "Course", "DifficultyIcons", "DaniDojoResized.png"));
                 gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Dan-i dojo";
             }
@@ -89,7 +89,7 @@ namespace DaniDojo.Patches
             {
                 Plugin.Log.LogInfo("Create Panel");
                 //var newPanel = DaniDojoAssetUtility.CreateImage(name, Path.Combine("Enso", "RequirementPanel.png"), location, parent);
-                var newPanel = AssetUtility.CreateImageChild(parent, name, location, Path.Combine("Enso", "RequirementPanel.png"));
+                var newPanel = OldAssetUtility.CreateImageChild(parent, name, location, Path.Combine("Enso", "RequirementPanel.png"));
 
                 string requirementText = "Goods";
 
@@ -129,9 +129,9 @@ namespace DaniDojo.Patches
                 }
 
                 //var requirementTypeText = DaniDojoAssetUtility.CreateText("RequirementTypeText", requirementText, new Rect(24, 109, 334, 36), reqTypefont, reqTypeFontMaterial, HorizontalAlignmentOptions.Center, new Color32(74, 64, 51, 255), newPanel.transform);
-                var requirementTypeText = AssetUtility.CreateTextChild(newPanel, "RequirementTypeText", new Rect(24, 109, 334, 36), requirementText);
-                AssetUtility.SetTextFontAndMaterial(requirementTypeText, reqTypefont, reqTypeFontMaterial);
-                AssetUtility.SetTextAlignment(requirementTypeText, HorizontalAlignmentOptions.Center);
+                var requirementTypeText = OldAssetUtility.CreateTextChild(newPanel, "RequirementTypeText", new Rect(24, 109, 334, 36), requirementText);
+                OldAssetUtility.SetTextFontAndMaterial(requirementTypeText, reqTypefont, reqTypeFontMaterial);
+                OldAssetUtility.SetTextAlignment(requirementTypeText, HorizontalAlignmentOptions.Center);
 
                 Plugin.Log.LogInfo("Create SongIndicators");
 
@@ -143,7 +143,7 @@ namespace DaniDojo.Patches
                 }
 
                 //DaniDojoAssetUtility.CreateImage("SongNumIndicator", Path.Combine("Enso", songNumIndImagePath), new Vector2(20, 34), newPanel.transform);
-                AssetUtility.CreateImageChild(newPanel, "SongNumIndicator", new Vector2(20, 34), Path.Combine("Enso", songNumIndImagePath));
+                OldAssetUtility.CreateImageChild(newPanel, "SongNumIndicator", new Vector2(20, 34), Path.Combine("Enso", songNumIndImagePath));
 
                 Plugin.Log.LogInfo("Create Requirement Value Text");
 
@@ -175,9 +175,9 @@ namespace DaniDojo.Patches
                 Material reqValueFontMaterial = fontManager.GetDescriptionFontMaterial(DataConst.FontType.EFIGS, DataConst.DescriptionFontMaterialType.OutlineSongInfo);
 
                 //var requirementValue = DaniDojoAssetUtility.CreateText("RequirementValue", requirementValueString, new Rect(28, 40, 334, 46), reqValuefont, reqValueFontMaterial, HorizontalAlignmentOptions.Right, new Color32(74, 64, 51, 255), newPanel.transform);
-                var requirementValue = AssetUtility.CreateTextChild(newPanel, "RequirementValue", new Rect(28, 40, 334, 46), requirementValueString);
-                AssetUtility.SetTextFontAndMaterial(requirementValue, reqValuefont, reqValueFontMaterial);
-                AssetUtility.SetTextAlignment(requirementValue, HorizontalAlignmentOptions.Right);
+                var requirementValue = OldAssetUtility.CreateTextChild(newPanel, "RequirementValue", new Rect(28, 40, 334, 46), requirementValueString);
+                OldAssetUtility.SetTextFontAndMaterial(requirementValue, reqValuefont, reqValueFontMaterial);
+                OldAssetUtility.SetTextAlignment(requirementValue, HorizontalAlignmentOptions.Right);
 
                 Plugin.Log.LogInfo("Create Requirement Bars");
 
@@ -191,7 +191,7 @@ namespace DaniDojo.Patches
                 }
                 Vector2 barPositions = new Vector2(389, 20);
                 //DaniDojoAssetUtility.CreateImage("CurReqBar", Path.Combine("Enso", "Bars", curReqBarImagePath), barPositions, newPanel.transform);
-                AssetUtility.CreateImageChild(newPanel, "CurReqBar", barPositions, Path.Combine("Enso", "Bars", curReqBarImagePath));
+                OldAssetUtility.CreateImageChild(newPanel, "CurReqBar", barPositions, Path.Combine("Enso", "Bars", curReqBarImagePath));
 
                 Rect fillBarRect;
                 Rect emptyBarRect;
@@ -206,15 +206,15 @@ namespace DaniDojo.Patches
                     emptyBarRect = new Rect(396 + 642, 36, 642, 80);
                 }
                 //var fillBar = DaniDojoAssetUtility.CreateNewImage("CurReqBarFill", PinkBarColor, fillBarRect, newPanel.transform);
-                var fillBar = AssetUtility.CreateImageChild(newPanel, "CurReqBarFill", fillBarRect, PinkBarColor);
+                var fillBar = OldAssetUtility.CreateImageChild(newPanel, "CurReqBarFill", fillBarRect, PinkBarColor);
                 fillBar.AddComponent<ColorLerp>();
 
 
                 //var coverBar = DaniDojoAssetUtility.CreateNewImage("CurReqBarEmpty", GreyBarColor, emptyBarRect, newPanel.transform);
-                var coverBar = AssetUtility.CreateImageChild(newPanel, "CurReqBarEmpty", emptyBarRect, GreyBarColor);
+                var coverBar = OldAssetUtility.CreateImageChild(newPanel, "CurReqBarEmpty", emptyBarRect, GreyBarColor);
 
                 //DaniDojoAssetUtility.CreateImage("CurReqBarBorder", Path.Combine("Enso", "Bars", curReqBarBorderImagePath), barPositions, newPanel.transform);
-                AssetUtility.CreateImageChild(newPanel, "CurReqBarBorder", barPositions, Path.Combine("Enso", "Bars", curReqBarBorderImagePath));
+                OldAssetUtility.CreateImageChild(newPanel, "CurReqBarBorder", barPositions, Path.Combine("Enso", "Bars", curReqBarBorderImagePath));
 
                 Plugin.Log.LogInfo("Create Previous Song Requirement Bars");
 
@@ -222,8 +222,8 @@ namespace DaniDojo.Patches
                 {
                     //var prevSongTop = DaniDojoAssetUtility.CreateImage("PrevSongHitReqsBarTop", Path.Combine("Enso", "Bars", "PrevSongHitReqs.png"), new Vector2(1083, 73), newPanel.transform);
                     //var prevSongBot = DaniDojoAssetUtility.CreateImage("PrevSongHitReqsBarBot", Path.Combine("Enso", "Bars", "PrevSongHitReqs.png"), new Vector2(1083, 23), newPanel.transform);
-                    var prevSongTop = AssetUtility.CreateImageChild(newPanel, "PrevSongHitReqsBarTop", new Vector2(1083, 73), Path.Combine("Enso", "Bars", "PrevSongHitReqs.png"));
-                    var prevSongBot = AssetUtility.CreateImageChild(newPanel, "PrevSongHitReqsBarBot", new Vector2(1083, 23), Path.Combine("Enso", "Bars", "PrevSongHitReqs.png"));
+                    var prevSongTop = OldAssetUtility.CreateImageChild(newPanel, "PrevSongHitReqsBarTop", new Vector2(1083, 73), Path.Combine("Enso", "Bars", "PrevSongHitReqs.png"));
+                    var prevSongBot = OldAssetUtility.CreateImageChild(newPanel, "PrevSongHitReqsBarBot", new Vector2(1083, 23), Path.Combine("Enso", "Bars", "PrevSongHitReqs.png"));
                     Plugin.Log.LogInfo("Create Previous Song Requirement Bars 1");
                     if (DaniPlayManager.GetCurrentSongNumber() >= 1)
                     {
@@ -232,10 +232,10 @@ namespace DaniDojo.Patches
                         //var prevSongBar1 = DaniDojoAssetUtility.CreateNewImage("PrevSongHitReqOneBarFill", PinkBarColor, new Rect(46, 11, 234, 33), prevSongTop.transform);
                         //DaniDojoAssetUtility.CreateImage("PrevSongHitReqOneBarBorder", Path.Combine("Enso", "Bars", "PrevSongBarBorder.png"), new Vector2(44, 4), prevSongTop.transform);
 
-                        AssetUtility.CreateImageChild(prevSongTop, "PrevSongHitReqOneIndicator", new Vector2(2, 10), Path.Combine("Enso", "PrevSongIndicator1.png"));
-                        AssetUtility.CreateImageChild(prevSongTop, "PrevSongHitReqOneBar", new Vector2(44, 4), Path.Combine("Enso", "PrevSongBar.png"));
-                        var prevSongBar1 = AssetUtility.CreateImageChild(prevSongTop, "PrevSongHitReqOneBarFill", new Rect(46, 11, 234, 33), PinkBarColor);
-                        AssetUtility.CreateImageChild(prevSongTop, "PrevSongHitReqOneBarBorder", new Vector2(44, 4), Path.Combine("Enso", "PrevSongBarBorder.png"));
+                        OldAssetUtility.CreateImageChild(prevSongTop, "PrevSongHitReqOneIndicator", new Vector2(2, 10), Path.Combine("Enso", "PrevSongIndicator1.png"));
+                        OldAssetUtility.CreateImageChild(prevSongTop, "PrevSongHitReqOneBar", new Vector2(44, 4), Path.Combine("Enso", "PrevSongBar.png"));
+                        var prevSongBar1 = OldAssetUtility.CreateImageChild(prevSongTop, "PrevSongHitReqOneBarFill", new Rect(46, 11, 234, 33), PinkBarColor);
+                        OldAssetUtility.CreateImageChild(prevSongTop, "PrevSongHitReqOneBarBorder", new Vector2(44, 4), Path.Combine("Enso", "PrevSongBarBorder.png"));
 
                         Plugin.Log.LogInfo("Create Previous Song Requirement Bars 2");
                         var songValues = DaniPlayManager.GetBorderPlayResults(border);
@@ -255,7 +255,7 @@ namespace DaniDojo.Patches
 
                             if (songData1.State == BorderBarState.Rainbow)
                             {
-                                AssetUtility.ChangeImageSprite(image, Path.Combine("Enso", "PrevSongRainbow", "PrevSongRainbow.png"));
+                                OldAssetUtility.ChangeImageSprite(image, Path.Combine("Enso", "PrevSongRainbow", "PrevSongRainbow.png"));
                             }
                             Plugin.Log.LogInfo("Create Previous Song Requirement Bars 4");
 
@@ -276,10 +276,10 @@ namespace DaniDojo.Patches
                             //var prevSongBar2 = DaniDojoAssetUtility.CreateNewImage("PrevSongHitReqTwoBarFill", PinkBarColor, new Rect(46, 11, 234, 33), prevSongBot.transform);
                             //DaniDojoAssetUtility.CreateImage("PrevSongHitReqTwoBarBorder", Path.Combine("Enso", "Bars", "PrevSongBarBorder.png"), new Vector2(44, 4), prevSongBot.transform);
 
-                            AssetUtility.CreateImageChild(prevSongBot, "PrevSongHitReqTwoIndicator", new Vector2(2, 10), Path.Combine("Enso", "PrevSongIndicator1.png"));
-                            AssetUtility.CreateImageChild(prevSongBot, "PrevSongHitReqTwoBar", new Vector2(44, 4), Path.Combine("Enso", "PrevSongBar.png"));
-                            var prevSongBar2 = AssetUtility.CreateImageChild(prevSongBot, "PrevSongHitReqTwoBarFill", new Rect(46, 11, 234, 33), PinkBarColor);
-                            AssetUtility.CreateImageChild(prevSongBot, "PrevSongHitReqTwoBarBorder", new Vector2(44, 4), Path.Combine("Enso", "PrevSongBarBorder.png"));
+                            OldAssetUtility.CreateImageChild(prevSongBot, "PrevSongHitReqTwoIndicator", new Vector2(2, 10), Path.Combine("Enso", "PrevSongIndicator1.png"));
+                            OldAssetUtility.CreateImageChild(prevSongBot, "PrevSongHitReqTwoBar", new Vector2(44, 4), Path.Combine("Enso", "PrevSongBar.png"));
+                            var prevSongBar2 = OldAssetUtility.CreateImageChild(prevSongBot, "PrevSongHitReqTwoBarFill", new Rect(46, 11, 234, 33), PinkBarColor);
+                            OldAssetUtility.CreateImageChild(prevSongBot, "PrevSongHitReqTwoBarBorder", new Vector2(44, 4), Path.Combine("Enso", "PrevSongBarBorder.png"));
 
                             Plugin.Log.LogInfo("Create Previous Song Requirement Bars 5");
                             var image2 = prevSongBar2.GetOrAddComponent<Image>();
@@ -296,7 +296,7 @@ namespace DaniDojo.Patches
 
                                 if (songData1.State == BorderBarState.Rainbow)
                                 {
-                                    AssetUtility.ChangeImageSprite(image2, Path.Combine("Enso", "PrevSongRainbow", "PrevSongRainbow.png"));
+                                    OldAssetUtility.ChangeImageSprite(image2, Path.Combine("Enso", "PrevSongRainbow", "PrevSongRainbow.png"));
                                 }
                                 Plugin.Log.LogInfo("Create Previous Song Requirement Bars 6");
 
@@ -322,7 +322,7 @@ namespace DaniDojo.Patches
                             continue;
                         }
 
-                        var mainFillBar = AssetUtility.GetChildByName(newPanel, "CurReqBarFill");
+                        var mainFillBar = OldAssetUtility.GetChildByName(newPanel, "CurReqBarFill");
                         var colorLerp = mainFillBar.GetOrAddComponent<ColorLerp>();
                         colorLerp.EndRainbow();
 
@@ -344,68 +344,68 @@ namespace DaniDojo.Patches
                         Material reqValueFontMaterial = fontManager.GetDescriptionFontMaterial(DataConst.FontType.EFIGS, DataConst.DescriptionFontMaterialType.OutlineSongInfo);
 
                         //var requirementValue = DaniDojoAssetUtility.CreateText("RequirementValue", requirementValueString, new Rect(28, 40, 334, 46), reqValuefont, reqValueFontMaterial, HorizontalAlignmentOptions.Right, new Color32(74, 64, 51, 255), newPanel.transform);
-                        var requirementValue = AssetUtility.GetChildByName(newPanel, "RequirementValue");
+                        var requirementValue = OldAssetUtility.GetChildByName(newPanel, "RequirementValue");
                         if (requirementValue == null)
                         {
-                            requirementValue = AssetUtility.CreateTextChild(newPanel, "RequirementValue", new Rect(28, 40, 334, 46), requirementValueString);
+                            requirementValue = OldAssetUtility.CreateTextChild(newPanel, "RequirementValue", new Rect(28, 40, 334, 46), requirementValueString);
                         }
                         requirementValue.GetOrAddComponent<TextMeshProUGUI>().text = requirementValueString;
-                        AssetUtility.SetTextFontAndMaterial(requirementValue, reqValuefont, reqValueFontMaterial);
-                        AssetUtility.SetTextAlignment(requirementValue, HorizontalAlignmentOptions.Right);
+                        OldAssetUtility.SetTextFontAndMaterial(requirementValue, reqValuefont, reqValueFontMaterial);
+                        OldAssetUtility.SetTextAlignment(requirementValue, HorizontalAlignmentOptions.Right);
 
                         #endregion
 
                         var songNumIndImagePath = "CurSongIndicator" + (DaniPlayManager.GetCurrentSongNumber() + 1) + ".png";
-                        var songNumIndicator = AssetUtility.GetChildByName(newPanel, "SongNumIndicator");
+                        var songNumIndicator = OldAssetUtility.GetChildByName(newPanel, "SongNumIndicator");
                         if (songNumIndicator == null)
                         {
-                            AssetUtility.CreateImageChild(newPanel, "SongNumIndicator", new Vector2(20, 34), Path.Combine("Enso", songNumIndImagePath));
+                            OldAssetUtility.CreateImageChild(newPanel, "SongNumIndicator", new Vector2(20, 34), Path.Combine("Enso", songNumIndImagePath));
                         }
                         else
                         {
-                            AssetUtility.ChangeImageSprite(songNumIndicator, Path.Combine("Enso", songNumIndImagePath));
+                            OldAssetUtility.ChangeImageSprite(songNumIndicator, Path.Combine("Enso", songNumIndImagePath));
                         }
 
                         //DaniDojoAssetUtility.CreateImage("SongNumIndicator", Path.Combine("Enso", songNumIndImagePath), new Vector2(20, 34), newPanel.transform);
 
 
-                        GameObject prevSongTop = AssetUtility.GetChildByName(newPanel, "PrevSongHitReqsBarTop");
+                        GameObject prevSongTop = OldAssetUtility.GetChildByName(newPanel, "PrevSongHitReqsBarTop");
                         if (prevSongTop == null)
                         {
-                            prevSongTop = AssetUtility.CreateImageChild(newPanel, "PrevSongHitReqsBarTop", new Vector2(1083, 73), Path.Combine("Enso", "Bars", "PrevSongHitReqs.png"));
+                            prevSongTop = OldAssetUtility.CreateImageChild(newPanel, "PrevSongHitReqsBarTop", new Vector2(1083, 73), Path.Combine("Enso", "Bars", "PrevSongHitReqs.png"));
                         }
 
-                        GameObject prevSongBot = AssetUtility.GetChildByName(newPanel, "PrevSongHitReqsBarBot");
+                        GameObject prevSongBot = OldAssetUtility.GetChildByName(newPanel, "PrevSongHitReqsBarBot");
                         if (prevSongBot == null)
                         {
-                            prevSongBot = AssetUtility.CreateImageChild(newPanel, "PrevSongHitReqsBarBot", new Vector2(1083, 23), Path.Combine("Enso", "Bars", "PrevSongHitReqs.png"));
+                            prevSongBot = OldAssetUtility.CreateImageChild(newPanel, "PrevSongHitReqsBarBot", new Vector2(1083, 23), Path.Combine("Enso", "Bars", "PrevSongHitReqs.png"));
                         }
 
                         // If the songIndex is 1, we want to get the score for the 0 song to place in the top spot
                         var parent = songIndex == 1 ? prevSongTop : prevSongBot;
 
-                        var prevSongIndicator = AssetUtility.GetChildByName(parent, "PrevSongHitReqOneIndicator");
+                        var prevSongIndicator = OldAssetUtility.GetChildByName(parent, "PrevSongHitReqOneIndicator");
                         if (prevSongIndicator == null)
                         {
-                            AssetUtility.CreateImageChild(parent, "PrevSongHitReqOneIndicator", new Vector2(2, 10), Path.Combine("Enso", "PrevSongIndicator" + songIndex + ".png"));
+                            OldAssetUtility.CreateImageChild(parent, "PrevSongHitReqOneIndicator", new Vector2(2, 10), Path.Combine("Enso", "PrevSongIndicator" + songIndex + ".png"));
                         }
 
-                        var prevSongBar = AssetUtility.GetChildByName(parent, "PrevSongHitReqOneBar");
+                        var prevSongBar = OldAssetUtility.GetChildByName(parent, "PrevSongHitReqOneBar");
                         if (prevSongBar == null)
                         {
-                            AssetUtility.CreateImageChild(parent, "PrevSongHitReqOneBar", new Vector2(44, 4), Path.Combine("Enso", "Bars", "PrevSongBar.png"));
+                            OldAssetUtility.CreateImageChild(parent, "PrevSongHitReqOneBar", new Vector2(44, 4), Path.Combine("Enso", "Bars", "PrevSongBar.png"));
                         }
 
-                        var prevSongBarFill = AssetUtility.GetChildByName(parent, "PrevSongHitReqOneBarFill");
+                        var prevSongBarFill = OldAssetUtility.GetChildByName(parent, "PrevSongHitReqOneBarFill");
                         if (prevSongBarFill == null)
                         {
-                            prevSongBarFill = AssetUtility.CreateImageChild(parent, "PrevSongHitReqOneBarFill", new Rect(46, 11, 234, 33), PinkBarColor);
+                            prevSongBarFill = OldAssetUtility.CreateImageChild(parent, "PrevSongHitReqOneBarFill", new Rect(46, 11, 234, 33), PinkBarColor);
                         }
 
-                        var prevSongBorder = AssetUtility.GetChildByName(parent, "PrevSongHitReqOneBarBorder");
+                        var prevSongBorder = OldAssetUtility.GetChildByName(parent, "PrevSongHitReqOneBarBorder");
                         if (prevSongBorder == null)
                         {
-                            AssetUtility.CreateImageChild(parent, "PrevSongHitReqOneBarBorder", new Vector2(44, 4), Path.Combine("Enso", "Bars", "PrevSongBarBorder.png"));
+                            OldAssetUtility.CreateImageChild(parent, "PrevSongHitReqOneBarBorder", new Vector2(44, 4), Path.Combine("Enso", "Bars", "PrevSongBarBorder.png"));
                         }
 
 
@@ -425,7 +425,7 @@ namespace DaniDojo.Patches
 
                             if (songData1.State == BorderBarState.Rainbow)
                             {
-                                AssetUtility.ChangeImageSprite(image, Path.Combine("Enso", "PrevSongRainbow", "PrevSongRainbow.png"));
+                                OldAssetUtility.ChangeImageSprite(image, Path.Combine("Enso", "PrevSongRainbow", "PrevSongRainbow.png"));
                             }
 
                             var barState = DigitAssets.GetRequirementBarState(songData1, course.Borders[j]);
@@ -473,8 +473,8 @@ namespace DaniDojo.Patches
                     {
                         ModLogger.Log("UpdateRequirementBar: 1", LogType.Debug);
                         //var bar = panel.transform.Find("CurReqBarFill");
-                        var bar = AssetUtility.GetChildByName(panel, "CurReqBarFill");
-                        var emptyBar = AssetUtility.GetChildByName(panel, "CurReqBarEmpty");
+                        var bar = OldAssetUtility.GetChildByName(panel, "CurReqBarFill");
+                        var emptyBar = OldAssetUtility.GetChildByName(panel, "CurReqBarEmpty");
                         if (bar != null && emptyBar != null)
                         {
                             ModLogger.Log("UpdateRequirementBar: 2", LogType.Debug);
@@ -607,12 +607,12 @@ namespace DaniDojo.Patches
                     textRect = new Rect(510, 24, 1000, 45);
                 }
 
-                var textObj = AssetUtility.GetChildByName(panel, "FailText");
+                var textObj = OldAssetUtility.GetChildByName(panel, "FailText");
                 if (textObj == null)
                 {
-                    textObj = AssetUtility.GetOrCreateTextChild(panel, "FailText", textRect, "Failed");
-                    AssetUtility.SetTextFontAndMaterial(textObj, font, fontMat);
-                    AssetUtility.SetTextColor(textObj, Color.red);
+                    textObj = OldAssetUtility.GetOrCreateTextChild(panel, "FailText", textRect, "Failed");
+                    OldAssetUtility.SetTextFontAndMaterial(textObj, font, fontMat);
+                    OldAssetUtility.SetTextColor(textObj, Color.red);
                     // TODO: Add the fail sound effect here
                     if (!isResult)
                     {
@@ -992,8 +992,8 @@ namespace DaniDojo.Patches
 
                 //DaniDojoAssetUtility.CreateImage("BgLightsOff", Path.Combine("Select", "BgLightsOff.png"), new Vector2(0, 0), parent.transform);
                 //DaniDojoAssetUtility.CreateImage("BgLightsOn", Path.Combine("Select", "BgLightsOn.png"), new Vector2(0, 0), parent.transform);
-                AssetUtility.CreateImageChild(bgParent, "BgLightsOff", Vector2.zero, Path.Combine("Select", "BgLightsOff.png"));
-                AssetUtility.CreateImageChild(bgParent, "BgLightsOn", Vector2.zero, Path.Combine("Select", "BgLightsOn.png"));
+                OldAssetUtility.CreateImageChild(bgParent, "BgLightsOff", Vector2.zero, Path.Combine("Select", "BgLightsOff.png"));
+                OldAssetUtility.CreateImageChild(bgParent, "BgLightsOn", Vector2.zero, Path.Combine("Select", "BgLightsOn.png"));
                 // TODO: Make a coroutine to flicker the BgLightsOn's transparency
 
                 //InitializeSelectAssetSprites();
@@ -1028,7 +1028,7 @@ namespace DaniDojo.Patches
                 }
 
                 
-                var topCoursesParent = AssetUtility.CreateEmptyObject(parent, "TopCourses", new Vector2(0, 0));
+                var topCoursesParent = OldAssetUtility.CreateEmptyObject(parent, "TopCourses", new Vector2(0, 0));
                 for (int i = 0; i < seriesInfo.Courses.Count; i++)
                 {
                     var highScore = SaveDataManager.GetCourseRecord(seriesInfo.Courses[i].Hash);
@@ -1171,14 +1171,14 @@ namespace DaniDojo.Patches
                     }
                     //var basePosition = AssetUtility.GetPositionFrom1080p(new Vector2(183, 884));
                     var basePosition = new Vector2(183, 884);
-                    var topCourseObject = AssetUtility.CreateEmptyObject(topCoursesParent, seriesInfo.Courses[i].Id, basePosition + new Vector2(68 * i, 0));
+                    var topCourseObject = OldAssetUtility.CreateEmptyObject(topCoursesParent, seriesInfo.Courses[i].Id, basePosition + new Vector2(68 * i, 0));
 
                     //GameObject topCourseObject = new GameObject(seriesInfo.Courses[i].Title);
                     //topCourseObject.transform.SetParent(topCoursesParent.transform);
                     //topCourseObject.transform.position = new Vector2(183 + (68 * i), 884);
-                    AssetUtility.CreateImageChild(topCourseObject, seriesInfo.Courses[i].Id + "Background", Vector2.zero, Path.Combine("Course", "Top", "Bg", backgroundName));
-                    AssetUtility.CreateImageChild(topCourseObject, seriesInfo.Courses[i].Id + "TopText", new Vector2(19, 62), Path.Combine("Course", "Top", "Text", topText));
-                    AssetUtility.CreateImageChild(topCourseObject, seriesInfo.Courses[i].Id + "BotText", new Vector2(19, 24), Path.Combine("Course", "Top", "Text", botText));
+                    OldAssetUtility.CreateImageChild(topCourseObject, seriesInfo.Courses[i].Id + "Background", Vector2.zero, Path.Combine("Course", "Top", "Bg", backgroundName));
+                    OldAssetUtility.CreateImageChild(topCourseObject, seriesInfo.Courses[i].Id + "TopText", new Vector2(19, 62), Path.Combine("Course", "Top", "Text", topText));
+                    OldAssetUtility.CreateImageChild(topCourseObject, seriesInfo.Courses[i].Id + "BotText", new Vector2(19, 24), Path.Combine("Course", "Top", "Text", botText));
                     //DaniDojoAssetUtility.CreateImage(seriesInfo.Courses[i].Title + "Background", GetAssetSprite(backgroundName), new Vector2(0, 0), topCourseObject.transform);
                     //DaniDojoAssetUtility.CreateImage(seriesInfo.Courses[i].Title + "Text", GetAssetSprite(textName), new Vector2(19, 24), topCourseObject.transform);
 
@@ -1217,7 +1217,7 @@ namespace DaniDojo.Patches
 
                     if (recordName != string.Empty)
                     {
-                        AssetUtility.CreateImageChild(topCourseObject, seriesInfo.Courses[i].Id + "Record", new Vector2(0, 98), Path.Combine("Select", "ResultIcons", "Small", recordName));
+                        OldAssetUtility.CreateImageChild(topCourseObject, seriesInfo.Courses[i].Id + "Record", new Vector2(0, 98), Path.Combine("Select", "ResultIcons", "Small", recordName));
                         //DaniDojoAssetUtility.CreateImage(seriesInfo.Courses[i].Title + "Record", GetAssetSprite(recordName), new Vector2(0, 98), topCourseObject.transform);
                     }
                 }
@@ -1259,7 +1259,7 @@ namespace DaniDojo.Patches
                         break;
                 }
 
-                var courseObject = AssetUtility.CreateImageChild(parent, "CourseBg" + courseBgNum++, CourseBgLocation, Path.Combine("Select", "CourseBg.png"));
+                var courseObject = OldAssetUtility.CreateImageChild(parent, "CourseBg" + courseBgNum++, CourseBgLocation, Path.Combine("Select", "CourseBg.png"));
                 //var courseObject = DaniDojoAssetUtility.CreateImage("CourseBg" + courseBgNum++, GetAssetSprite(SelectAssetName.CourseBg), CourseBgLocation, parent.transform);
 
                 string borderFileName = string.Empty;
@@ -1311,8 +1311,8 @@ namespace DaniDojo.Patches
                 //        rightBorderName = SelectAssetName.CourseBorderRightGaiden;
                 //        break;
                 //}
-                AssetUtility.CreateImageChild(courseObject, "LeftBorder", new Vector2(22, 33), Path.Combine("Course", "CourseSelect", "Borders", "Left", borderFileName));
-                AssetUtility.CreateImageChild(courseObject, "RightBorder", new Vector2(1458, 33), Path.Combine("Course", "CourseSelect", "Borders", "Right", borderFileName));
+                OldAssetUtility.CreateImageChild(courseObject, "LeftBorder", new Vector2(22, 33), Path.Combine("Course", "CourseSelect", "Borders", "Left", borderFileName));
+                OldAssetUtility.CreateImageChild(courseObject, "RightBorder", new Vector2(1458, 33), Path.Combine("Course", "CourseSelect", "Borders", "Right", borderFileName));
                 //DaniDojoAssetUtility.CreateImage("LeftBorder", GetAssetSprite(leftBorderName), new Vector2(22, 33), courseObject.transform);
                 //DaniDojoAssetUtility.CreateImage("RightBorder", GetAssetSprite(rightBorderName), new Vector2(1458, 33), courseObject.transform);
 
@@ -1340,7 +1340,7 @@ namespace DaniDojo.Patches
                 {
 
                     //GameObject songParent = DaniDojoAssetUtility.CreateImage("SongBg" + (i + 1), GetAssetSprite(SelectAssetName.SongTitleBg), new Vector2(78, 718 - (110 * i)), courseObject.transform);
-                    var songParent = AssetUtility.CreateImageChild(courseObject, "SongBg" + (i + 1), new Vector2(78, 718 - (110 * i)), Path.Combine("Select", "SongTitleBg.png"));
+                    var songParent = OldAssetUtility.CreateImageChild(courseObject, "SongBg" + (i + 1), new Vector2(78, 718 - (110 * i)), Path.Combine("Select", "SongTitleBg.png"));
 
                     //SelectAssetName songIndicator;
                     //if (i == 0)
@@ -1356,7 +1356,7 @@ namespace DaniDojo.Patches
                     //    songIndicator = SelectAssetName.SongIndicator3;
                     //}
                     //DaniDojoAssetUtility.CreateImage("SongIndicator", GetAssetSprite(songIndicator), new Vector2(10, 10), songParent.transform);
-                    AssetUtility.CreateImageChild(songParent, "SongIndicator", new Vector2(10, 10), Path.Combine("Select", "SongIndicator" + (i + 1) + ".png"));
+                    OldAssetUtility.CreateImageChild(songParent, "SongIndicator", new Vector2(10, 10), Path.Combine("Select", "SongIndicator" + (i + 1) + ".png"));
 
                     //var song = musicInfoAccessers.Find((x) => x.Id == courseInfo.Songs[i].SongId);
                     //string songTitle = "Song not found: ";
@@ -1454,15 +1454,15 @@ namespace DaniDojo.Patches
                 //DaniDojoAssetUtility.CreateImage("RequirementsPanelLeftBorder", GetAssetSprite(SelectAssetName.RequirementsPanelBorder), new Vector2(78, 33), courseObject.transform);
                 //DaniDojoAssetUtility.CreateImage("RequirementsPanelRightBorder", GetAssetSprite(SelectAssetName.RequirementsPanelBorder), new Vector2(1440, 33), courseObject.transform);
 
-                var requirementsMainPanel = AssetUtility.CreateImageChild(courseObject, "RequirementsMainPanel", new Vector2(78, 417), Path.Combine("Select", "RequirementsMainPanel"));
-                AssetUtility.CreateImageChild(courseObject, "RequirementsPanelLeftBorder", new Vector2(78, 33), Path.Combine("Select", "RequirementsPanelBorder"));
-                AssetUtility.CreateImageChild(courseObject, "RequirementsPanelRightBorder", new Vector2(1440, 33), Path.Combine("Select", "RequirementsPanelBorder"));
+                var requirementsMainPanel = OldAssetUtility.CreateImageChild(courseObject, "RequirementsMainPanel", new Vector2(78, 417), Path.Combine("Select", "RequirementsMainPanel"));
+                OldAssetUtility.CreateImageChild(courseObject, "RequirementsPanelLeftBorder", new Vector2(78, 33), Path.Combine("Select", "RequirementsPanelBorder"));
+                OldAssetUtility.CreateImageChild(courseObject, "RequirementsPanelRightBorder", new Vector2(1440, 33), Path.Combine("Select", "RequirementsPanelBorder"));
 
 
 
                 // Add Soul Gauge Requirements
                 //var SoulGaugeReqPanel = DaniDojoAssetUtility.CreateImage("SoulGaugeReqPanel", GetAssetSprite(SelectAssetName.SoulGaugeReqPanel), new Vector2(94, 268), courseObject.transform);
-                var SoulGaugeReqPanel = AssetUtility.CreateImageChild(courseObject, "SoulGaugeReqPanel", new Vector2(94, 268), Path.Combine("Select", "SoulGaugeReqPanel"));
+                var SoulGaugeReqPanel = OldAssetUtility.CreateImageChild(courseObject, "SoulGaugeReqPanel", new Vector2(94, 268), Path.Combine("Select", "SoulGaugeReqPanel"));
 
 
                 TMP_FontAsset reqTypeFont = fontTMPMgr.GetDefaultFontAsset(DataConst.FontType.EFIGS);
@@ -1472,15 +1472,15 @@ namespace DaniDojo.Patches
                 Material reqValueFontMaterial = fontTMPMgr.GetDescriptionFontMaterial(DataConst.FontType.EFIGS, DataConst.DescriptionFontMaterialType.OutlineSongInfo);
 
                 Rect requirementsMainPanelRect = new Rect(102, 20, 100, 100);
-                var requirementMainPanelText = AssetUtility.CreateTextChild(requirementsMainPanel, "RequirementsMainPanelHeader", requirementsMainPanelRect, "Clear Conditions");
-                AssetUtility.SetTextFontAndMaterial(requirementMainPanelText, reqTypeFont, reqTypeFontMaterial);
-                AssetUtility.SetTextAlignment(requirementMainPanelText, HorizontalAlignmentOptions.Center);
+                var requirementMainPanelText = OldAssetUtility.CreateTextChild(requirementsMainPanel, "RequirementsMainPanelHeader", requirementsMainPanelRect, "Clear Conditions");
+                OldAssetUtility.SetTextFontAndMaterial(requirementMainPanelText, reqTypeFont, reqTypeFontMaterial);
+                OldAssetUtility.SetTextAlignment(requirementMainPanelText, HorizontalAlignmentOptions.Center);
 
                 Rect SoulGaugeHeaderRect = new Rect(40, 139, 240, 25);
                 //DaniDojoAssetUtility.CreateText("SoulGaugeHeader", "Soul Gauge", SoulGaugeHeaderRect, reqTypeFont, reqTypeFontMaterial, HorizontalAlignmentOptions.Center, new Color32(74, 64, 51, 255), SoulGaugeReqPanel.transform);
-                var soulGaugeHeader = AssetUtility.CreateTextChild(SoulGaugeReqPanel, "SoulGaugeHeader", SoulGaugeHeaderRect, "Soul Gauge");
-                AssetUtility.SetTextFontAndMaterial(soulGaugeHeader, reqTypeFont, reqTypeFontMaterial);
-                AssetUtility.SetTextAlignment(soulGaugeHeader, HorizontalAlignmentOptions.Center);
+                var soulGaugeHeader = OldAssetUtility.CreateTextChild(SoulGaugeReqPanel, "SoulGaugeHeader", SoulGaugeHeaderRect, "Soul Gauge");
+                OldAssetUtility.SetTextFontAndMaterial(soulGaugeHeader, reqTypeFont, reqTypeFontMaterial);
+                OldAssetUtility.SetTextAlignment(soulGaugeHeader, HorizontalAlignmentOptions.Center);
 
                 int soulGaugeRequirement = 100;
                 for (int i = 0; i < courseInfo.Borders.Count; i++)
@@ -1494,9 +1494,9 @@ namespace DaniDojo.Patches
 
                 Rect SoulGaugeReqValueRect = new Rect(50, 73, 256, 39);
                 //DaniDojoAssetUtility.CreateText("SoulGaugeReqValue", soulGaugeRequirement.ToString() + "% or higher", SoulGaugeReqValueRect, reqValueFont, reqValueFontMaterial, HorizontalAlignmentOptions.Right, new Color32(74, 64, 51, 255), SoulGaugeReqPanel.transform);
-                var soulGaugeReqValue = AssetUtility.CreateTextChild(SoulGaugeReqPanel, "SoulGaugeReqValue", SoulGaugeReqValueRect, soulGaugeRequirement.ToString() + "% or higher");
-                AssetUtility.SetTextFontAndMaterial(soulGaugeReqValue, reqValueFont, reqValueFontMaterial);
-                AssetUtility.SetTextAlignment(soulGaugeReqValue, HorizontalAlignmentOptions.Right);
+                var soulGaugeReqValue = OldAssetUtility.CreateTextChild(SoulGaugeReqPanel, "SoulGaugeReqValue", SoulGaugeReqValueRect, soulGaugeRequirement.ToString() + "% or higher");
+                OldAssetUtility.SetTextFontAndMaterial(soulGaugeReqValue, reqValueFont, reqValueFontMaterial);
+                OldAssetUtility.SetTextAlignment(soulGaugeReqValue, HorizontalAlignmentOptions.Right);
 
                 if (highScore.SongReached > 0)
                 {
@@ -1504,19 +1504,19 @@ namespace DaniDojo.Patches
                     //var SoulGaugeHighScoreHeader = DaniDojoAssetUtility.CreateText("SoulGaugeHighScoreHeader", "High Score", SoulGaugeHighScoreHeaderRect, detailFont, detailFontMaterial, HorizontalAlignmentOptions.Left, new Color32(0, 0, 0, 0), SoulGaugeReqPanel.transform);
                     //SoulGaugeHighScoreHeader.GetComponent<TextMeshProUGUI>().color = Color.black;
 
-                    var SoulGaugeHighScoreHeader = AssetUtility.CreateTextChild(SoulGaugeReqPanel, "SoulGaugeHighScoreHeader", SoulGaugeHighScoreHeaderRect, "High Score");
-                    AssetUtility.SetTextFontAndMaterial(SoulGaugeHighScoreHeader, detailFont, detailFontMaterial);
-                    AssetUtility.SetTextAlignment(SoulGaugeHighScoreHeader, HorizontalAlignmentOptions.Left);
-                    AssetUtility.SetTextColor(SoulGaugeHighScoreHeader, Color.black);
+                    var SoulGaugeHighScoreHeader = OldAssetUtility.CreateTextChild(SoulGaugeReqPanel, "SoulGaugeHighScoreHeader", SoulGaugeHighScoreHeaderRect, "High Score");
+                    OldAssetUtility.SetTextFontAndMaterial(SoulGaugeHighScoreHeader, detailFont, detailFontMaterial);
+                    OldAssetUtility.SetTextAlignment(SoulGaugeHighScoreHeader, HorizontalAlignmentOptions.Left);
+                    OldAssetUtility.SetTextColor(SoulGaugeHighScoreHeader, Color.black);
 
                     Rect SoulGaugeHighScoreValueRect = new Rect(200, 20, 100, 40);
                     //var SoulGaugeHighScoreValue = DaniDojoAssetUtility.CreateText("SoulGaugeHighScoreValue", highScore.PlayData.Max((x) => x.SoulGauge).ToString() + " %", SoulGaugeHighScoreValueRect, detailFont, detailFontMaterial, HorizontalAlignmentOptions.Right, new Color32(0, 0, 0, 0), SoulGaugeReqPanel.transform);
                     //SoulGaugeHighScoreValue.GetComponent<TextMeshProUGUI>().color = Color.black;
 
-                    var SoulGaugeHighScoreValue = AssetUtility.CreateTextChild(SoulGaugeReqPanel, "SoulGaugeHighScoreValue", SoulGaugeHighScoreValueRect, highScore.PlayData.Max((x) => x.SoulGauge).ToString() + " %");
-                    AssetUtility.SetTextFontAndMaterial(SoulGaugeHighScoreValue, detailFont, detailFontMaterial);
-                    AssetUtility.SetTextAlignment(SoulGaugeHighScoreValue, HorizontalAlignmentOptions.Right);
-                    AssetUtility.SetTextColor(SoulGaugeHighScoreValue, Color.black);
+                    var SoulGaugeHighScoreValue = OldAssetUtility.CreateTextChild(SoulGaugeReqPanel, "SoulGaugeHighScoreValue", SoulGaugeHighScoreValueRect, highScore.PlayData.Max((x) => x.SoulGauge).ToString() + " %");
+                    OldAssetUtility.SetTextFontAndMaterial(SoulGaugeHighScoreValue, detailFont, detailFontMaterial);
+                    OldAssetUtility.SetTextAlignment(SoulGaugeHighScoreValue, HorizontalAlignmentOptions.Right);
+                    OldAssetUtility.SetTextColor(SoulGaugeHighScoreValue, Color.black);
                 }
 
 
@@ -1530,7 +1530,7 @@ namespace DaniDojo.Patches
                         continue;
                     }
                     //var reqPanel = DaniDojoAssetUtility.CreateImage("ReqPanel" + (i + 1), GetAssetSprite(SelectAssetName.RequirementsEachPanel), new Vector2(427, 310 - (passedSoulGauge ? (i - 1) * 132 : i * 132)), courseObject.transform);
-                    var reqPanel = AssetUtility.CreateImageChild(courseObject, "ReqPanel" + (i + 1), new Vector2(427, 310 - (passedSoulGauge ? (i - 1) * 132 : i * 132)), Path.Combine("Select", "RequirementsEachPanel.png"));
+                    var reqPanel = OldAssetUtility.CreateImageChild(courseObject, "ReqPanel" + (i + 1), new Vector2(427, 310 - (passedSoulGauge ? (i - 1) * 132 : i * 132)), Path.Combine("Select", "RequirementsEachPanel.png"));
 
                     Rect reqPanelHeaderRect = new Rect(34, 95, 240, 25);
                     string requirementTypeText = string.Empty;
@@ -1545,15 +1545,15 @@ namespace DaniDojo.Patches
                         case BorderType.TotalHits: requirementTypeText = "Total Hits"; break;
                     }
                     //DaniDojoAssetUtility.CreateText("SoulGaugeHeader", requirementTypeText, reqPanelHeaderRect, reqTypeFont, reqTypeFontMaterial, HorizontalAlignmentOptions.Center, new Color32(74, 64, 51, 255), reqPanel.transform);
-                    var soulGaugeHeaderText = AssetUtility.CreateTextChild(reqPanel, "SoulGaugeHeader", reqPanelHeaderRect, requirementTypeText);
-                    AssetUtility.SetTextFontAndMaterial(soulGaugeHeaderText, reqTypeFont, reqTypeFontMaterial);
-                    AssetUtility.SetTextAlignment(soulGaugeHeaderText, HorizontalAlignmentOptions.Center);
+                    var soulGaugeHeaderText = OldAssetUtility.CreateTextChild(reqPanel, "SoulGaugeHeader", reqPanelHeaderRect, requirementTypeText);
+                    OldAssetUtility.SetTextFontAndMaterial(soulGaugeHeaderText, reqTypeFont, reqTypeFontMaterial);
+                    OldAssetUtility.SetTextAlignment(soulGaugeHeaderText, HorizontalAlignmentOptions.Center);
 
 
                     if (courseInfo.Borders[i].IsTotal)
                     {
                         //var reqPanelValue = DaniDojoAssetUtility.CreateImage("ReqPanelValue" + (i + 1), GetAssetSprite(SelectAssetName.ReqSongIndicatorTotal), new Vector2(14, 49), reqPanel.transform);
-                        var reqPanelValue = AssetUtility.CreateImageChild(reqPanel, "ReqPanelValue" + (i + 1), new Vector2(14, 49), Path.Combine("Select", "ReqSongIndicatorTotal.png"));
+                        var reqPanelValue = OldAssetUtility.CreateImageChild(reqPanel, "ReqPanelValue" + (i + 1), new Vector2(14, 49), Path.Combine("Select", "ReqSongIndicatorTotal.png"));
 
 
                         string valueText = string.Empty;
@@ -1567,13 +1567,13 @@ namespace DaniDojo.Patches
                         }
                         Rect reqValueRect = new Rect(50, 0, 256, 31);
                         //DaniDojoAssetUtility.CreateText("ReqValue" + (i + 1), valueText, reqValueRect, reqValueFont, reqValueFontMaterial, HorizontalAlignmentOptions.Right, new Color32(74, 64, 51, 255), reqPanelValue.transform);
-                        var reqValueText = AssetUtility.CreateTextChild(reqPanelValue, "ReqValue" + (i + 1), reqValueRect, valueText);
-                        AssetUtility.SetTextFontAndMaterial(reqValueText, reqValueFont, reqValueFontMaterial);
-                        AssetUtility.SetTextAlignment(reqValueText, HorizontalAlignmentOptions.Right);
+                        var reqValueText = OldAssetUtility.CreateTextChild(reqPanelValue, "ReqValue" + (i + 1), reqValueRect, valueText);
+                        OldAssetUtility.SetTextFontAndMaterial(reqValueText, reqValueFont, reqValueFontMaterial);
+                        OldAssetUtility.SetTextAlignment(reqValueText, HorizontalAlignmentOptions.Right);
 
 
                         //var reqPanelBest = DaniDojoAssetUtility.CreateImage("ReqPanelBest" + (i + 1), GetAssetSprite(SelectAssetName.PersonalBestBg), new Vector2(14, 11), reqPanel.transform);
-                        var reqPanelBest = AssetUtility.CreateImageChild(reqPanel, "ReqPanelBest" + (i + 1), new Vector2(14, 11), Path.Combine("Select", "PersonalBestBg.png"));
+                        var reqPanelBest = OldAssetUtility.CreateImageChild(reqPanel, "ReqPanelBest" + (i + 1), new Vector2(14, 11), Path.Combine("Select", "PersonalBestBg.png"));
 
 
                         if (highScore.SongReached > 0)
@@ -1596,9 +1596,9 @@ namespace DaniDojo.Patches
 
                             Rect highScoreValueRect = new Rect(200, -3, 100, 35);
                             //var highScoreValue = DaniDojoAssetUtility.CreateText("HighScoreValue", highScoreValueText, highScoreValueRect, detailFont, detailFontMaterial, HorizontalAlignmentOptions.Right, new Color32(0, 0, 0, 0), reqPanelBest.transform);
-                            var highScoreValue = AssetUtility.CreateTextChild(reqPanelBest, "HighScoreValue", highScoreValueRect, highScoreValueText);
-                            AssetUtility.SetTextFontAndMaterial(highScoreValue, detailFont, detailFontMaterial);
-                            AssetUtility.SetTextAlignment(highScoreValue, HorizontalAlignmentOptions.Right);
+                            var highScoreValue = OldAssetUtility.CreateTextChild(reqPanelBest, "HighScoreValue", highScoreValueRect, highScoreValueText);
+                            OldAssetUtility.SetTextFontAndMaterial(highScoreValue, detailFont, detailFontMaterial);
+                            OldAssetUtility.SetTextAlignment(highScoreValue, HorizontalAlignmentOptions.Right);
                             highScoreValue.GetComponent<TextMeshProUGUI>().color = Color.black;
                         }
                     }
@@ -1617,7 +1617,7 @@ namespace DaniDojo.Patches
                             //    SongIndicatorAsset = SelectAssetName.ReqSongIndicator3;
                             //}
                             //var reqPanelValue = DaniDojoAssetUtility.CreateImage("ReqPanelValue" + (j + 1), GetAssetSprite(SongIndicatorAsset), new Vector2(14 + xOffset, 49), reqPanel.transform);
-                            var reqPanelValue = AssetUtility.CreateImageChild(reqPanel, "ReqPanelValue" + (j + 1), new Vector2(14 + xOffset, 49), Path.Combine("Select", "ReqSongIndicator" + (j + 1) + ".png"));
+                            var reqPanelValue = OldAssetUtility.CreateImageChild(reqPanel, "ReqPanelValue" + (j + 1), new Vector2(14 + xOffset, 49), Path.Combine("Select", "ReqSongIndicator" + (j + 1) + ".png"));
                             string valueText = string.Empty;
                             if (courseInfo.Borders[i].BorderType == BorderType.Oks || courseInfo.Borders[i].BorderType == BorderType.Bads)
                             {
@@ -1629,13 +1629,13 @@ namespace DaniDojo.Patches
                             }
                             Rect reqValueRect = new Rect(50, 0, 256, 31);
                             //DaniDojoAssetUtility.CreateText("ReqValue" + (i + 1), valueText, reqValueRect, reqValueFont, reqValueFontMaterial, HorizontalAlignmentOptions.Right, new Color32(74, 64, 51, 255), reqPanelValue.transform);
-                            var reqValueText = AssetUtility.CreateTextChild(reqPanelValue, "ReqValue" + (i + 1), reqValueRect, valueText);
-                            AssetUtility.SetTextFontAndMaterial(reqValueText, reqValueFont, reqValueFontMaterial);
-                            AssetUtility.SetTextAlignment(reqValueText, HorizontalAlignmentOptions.Right);
+                            var reqValueText = OldAssetUtility.CreateTextChild(reqPanelValue, "ReqValue" + (i + 1), reqValueRect, valueText);
+                            OldAssetUtility.SetTextFontAndMaterial(reqValueText, reqValueFont, reqValueFontMaterial);
+                            OldAssetUtility.SetTextAlignment(reqValueText, HorizontalAlignmentOptions.Right);
 
 
                             //var reqPanelBest = DaniDojoAssetUtility.CreateImage("ReqPanelBest" + (j + 1), GetAssetSprite(SelectAssetName.PersonalBestBg), new Vector2(14 + xOffset, 11), reqPanel.transform);
-                            var reqPanelBest = AssetUtility.CreateImageChild(reqPanel, "ReqPanelBest" + (j + 1), new Vector2(14 + xOffset, 11), Path.Combine("Select", "PersonalBestBg.png"));
+                            var reqPanelBest = OldAssetUtility.CreateImageChild(reqPanel, "ReqPanelBest" + (j + 1), new Vector2(14 + xOffset, 11), Path.Combine("Select", "PersonalBestBg.png"));
 
 
                             // SongReached of 0 means it wasn't played
@@ -1660,10 +1660,10 @@ namespace DaniDojo.Patches
                                 Rect highScoreValueRect = new Rect(200, -3, 100, 35);
                                 //var highScoreValue = DaniDojoAssetUtility.CreateText("HighScoreValue", highScoreValueText, highScoreValueRect, detailFont, detailFontMaterial, HorizontalAlignmentOptions.Right, new Color32(0, 0, 0, 0), reqPanelBest.transform);
                                 //highScoreValue.GetComponent<TextMeshProUGUI>().color = Color.black;
-                                var highScoreValue = AssetUtility.CreateTextChild(reqPanelBest, "HighScoreValue", highScoreValueRect, highScoreValueText);
-                                AssetUtility.SetTextFontAndMaterial(highScoreValue, detailFont, detailFontMaterial);
-                                AssetUtility.SetTextAlignment(highScoreValue, HorizontalAlignmentOptions.Right);
-                                AssetUtility.SetTextColor(highScoreValue, Color.black);
+                                var highScoreValue = OldAssetUtility.CreateTextChild(reqPanelBest, "HighScoreValue", highScoreValueRect, highScoreValueText);
+                                OldAssetUtility.SetTextFontAndMaterial(highScoreValue, detailFont, detailFontMaterial);
+                                OldAssetUtility.SetTextAlignment(highScoreValue, HorizontalAlignmentOptions.Right);
+                                OldAssetUtility.SetTextColor(highScoreValue, Color.black);
 
                             }
                         }
@@ -1740,7 +1740,7 @@ namespace DaniDojo.Patches
                     }
 
                     // DaniDojoAssetUtility.CreateImage(seriesInfo.Courses[i].Title + "Record", GetAssetSprite(recordName), new Vector2(0, 98), topCourseObject.transform);
-                    AssetUtility.CreateImageChild(courseObject, "DanResult", new Vector2(-242, 291), Path.Combine("Select", "ResultIcons", "Big", recordName + ".png")); // IDK what the file path will be
+                    OldAssetUtility.CreateImageChild(courseObject, "DanResult", new Vector2(-242, 291), Path.Combine("Select", "ResultIcons", "Big", recordName + ".png")); // IDK what the file path will be
                 }
 
                 return courseObject;

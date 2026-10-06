@@ -69,9 +69,9 @@ namespace DaniDojo.Assets
 
             Rect rect = new Rect(position, new Vector2(1920, 40));
 
-            var songTitleObject = AssetUtility.CreateTextChild(parent, "SongTitle", rect, songTitle);
-            AssetUtility.SetTextFontAndMaterial(songTitleObject, titleFont, titleFontMaterial);
-            AssetUtility.SetTextAlignment(songTitleObject, HorizontalAlignmentOptions.Left);
+            var songTitleObject = OldAssetUtility.CreateTextChild(parent, "SongTitle", rect, songTitle);
+            OldAssetUtility.SetTextFontAndMaterial(songTitleObject, titleFont, titleFontMaterial);
+            OldAssetUtility.SetTextAlignment(songTitleObject, HorizontalAlignmentOptions.Left);
 
             return songTitleObject;
         }
@@ -101,10 +101,10 @@ namespace DaniDojo.Assets
 
             Rect rect = new Rect(position, new Vector2(1920, 20));
 
-            var songDetailObject = AssetUtility.CreateTextChild(parent, "SongDetail", rect, songDetail);
-            AssetUtility.SetTextFontAndMaterial(songDetailObject, detailFont, detailFontMaterial);
-            AssetUtility.SetTextAlignment(songDetailObject, HorizontalAlignmentOptions.Left);
-            AssetUtility.SetTextColor(songDetailObject, Color.black);
+            var songDetailObject = OldAssetUtility.CreateTextChild(parent, "SongDetail", rect, songDetail);
+            OldAssetUtility.SetTextFontAndMaterial(songDetailObject, detailFont, detailFontMaterial);
+            OldAssetUtility.SetTextAlignment(songDetailObject, HorizontalAlignmentOptions.Left);
+            OldAssetUtility.SetTextColor(songDetailObject, Color.black);
 
             return songDetailObject;
         }
@@ -121,7 +121,7 @@ namespace DaniDojo.Assets
                 case EnsoData.EnsoLevelType.Ura: file = "CourseUra.png"; break;
                 default: file = "CourseOni.png"; break;
             }
-            return AssetUtility.CreateImageChild(parent, "SongCourse", position, Path.Combine(AssetFilePath, "DifficultyAssets", file));
+            return OldAssetUtility.CreateImageChild(parent, "SongCourse", position, Path.Combine(AssetFilePath, "DifficultyAssets", file));
         }
 
         static public GameObject CreateSongLevelChild(GameObject parent, Vector2 position, DaniSongData song)
@@ -149,7 +149,7 @@ namespace DaniDojo.Assets
                     default: file = "Star10Plus.png"; break;
                 }
             }
-            return AssetUtility.CreateImageChild(parent, "SongLevel", position, Path.Combine(AssetFilePath, "DifficultyAssets", file));
+            return OldAssetUtility.CreateImageChild(parent, "SongLevel", position, Path.Combine(AssetFilePath, "DifficultyAssets", file));
         }
 
         static public GameObject CreateCourseTitleBar(GameObject parent, Vector2 position, DaniCourse course)
@@ -170,7 +170,7 @@ namespace DaniDojo.Assets
                 bgImage = "SousakuTitleBg.png";
             }
 
-            var titleBarObject = AssetUtility.CreateImageChild(parent, "CourseTitleBar", position, Path.Combine("Course", "CourseSelect", bgImage));
+            var titleBarObject = OldAssetUtility.CreateImageChild(parent, "CourseTitleBar", position, Path.Combine("Course", "CourseSelect", bgImage));
 
             var wordDataMgr = TaikoSingletonMonoBehaviour<CommonObjects>.Instance.MyDataManager.WordDataMgr;
             FontTMPManager fontTMPMgr = TaikoSingletonMonoBehaviour<CommonObjects>.Instance.MyDataManager.FontTMPMgr;
@@ -191,10 +191,10 @@ namespace DaniDojo.Assets
                 courseTitle = course.EngTitle;
             }
 
-            var titleText = AssetUtility.CreateTextChild(titleBarObject, "Title", new Rect(72, 6, 950, 70), courseTitle);
-            AssetUtility.SetTextFontAndMaterial(titleText, titleFont, titleFontMaterial);
-            AssetUtility.SetTextAlignment(titleText, HorizontalAlignmentOptions.Left);
-            AssetUtility.SetTextFontSize(titleText, 41);
+            var titleText = OldAssetUtility.CreateTextChild(titleBarObject, "Title", new Rect(72, 6, 950, 70), courseTitle);
+            OldAssetUtility.SetTextFontAndMaterial(titleText, titleFont, titleFontMaterial);
+            OldAssetUtility.SetTextAlignment(titleText, HorizontalAlignmentOptions.Left);
+            OldAssetUtility.SetTextFontSize(titleText, 41);
 
             return titleBarObject;
         }
@@ -341,19 +341,19 @@ namespace DaniDojo.Assets
             }
 
 
-            var daniCourseParent = AssetUtility.CreateEmptyObject(parent, "DaniCourse", position);
-            AssetUtility.CreateImageChild(daniCourseParent, "Background", new Vector2(0, -1), Path.Combine("Course", "Main", "Bg", bgImageFile));
-            var textParent = AssetUtility.GetOrCreateEmptyChild(daniCourseParent, "Text", new Vector2(52, 124));
-            AssetUtility.CreateImageChild(textParent, "TopJpText", new Vector2(12, 225), Path.Combine("Course", "Main", "JpText", topJpText));
-            AssetUtility.CreateImageChild(textParent, "BotJpText", new Vector2(12, 93), Path.Combine("Course", "Main", "JpText", botJpText));
+            var daniCourseParent = OldAssetUtility.CreateEmptyObject(parent, "DaniCourse", position);
+            OldAssetUtility.CreateImageChild(daniCourseParent, "Background", new Vector2(0, -1), Path.Combine("Course", "Main", "Bg", bgImageFile));
+            var textParent = OldAssetUtility.GetOrCreateEmptyChild(daniCourseParent, "Text", new Vector2(52, 124));
+            OldAssetUtility.CreateImageChild(textParent, "TopJpText", new Vector2(12, 225), Path.Combine("Course", "Main", "JpText", topJpText));
+            OldAssetUtility.CreateImageChild(textParent, "BotJpText", new Vector2(12, 93), Path.Combine("Course", "Main", "JpText", botJpText));
             if (botEngText == string.Empty)
             {
-                AssetUtility.CreateImageChild(textParent, "EngText", new Vector2(0, 16), Path.Combine("Course", "Main", "EngText", topEngText));
+                OldAssetUtility.CreateImageChild(textParent, "EngText", new Vector2(0, 16), Path.Combine("Course", "Main", "EngText", topEngText));
             }
             else
             {
-                AssetUtility.CreateImageChild(textParent, "TopEngText", new Vector2(0, 30), Path.Combine("Course", "Main", "EngText", topEngText));
-                AssetUtility.CreateImageChild(textParent, "BotEngText", new Vector2(0, 00), Path.Combine("Course", "Main", "EngText", botEngText));
+                OldAssetUtility.CreateImageChild(textParent, "TopEngText", new Vector2(0, 30), Path.Combine("Course", "Main", "EngText", topEngText));
+                OldAssetUtility.CreateImageChild(textParent, "BotEngText", new Vector2(0, 00), Path.Combine("Course", "Main", "EngText", botEngText));
             }
 
             return daniCourseParent;
@@ -363,13 +363,13 @@ namespace DaniDojo.Assets
         static public GameObject CreateDigit(GameObject parent, string name, Vector2 position, DigitType type, char number)
         {
             string digitPath = GetDigitFilePath(type, number.ToString());
-            return AssetUtility.CreateImageChild(parent, name, position, digitPath);
+            return OldAssetUtility.CreateImageChild(parent, name, position, digitPath);
         }
 
         static public void ChangeDigit(GameObject gameObject, DigitType type, string number)
         {
             string digitPath = GetDigitFilePath(type, number);
-            AssetUtility.ChangeImageSprite(gameObject, digitPath);
+            OldAssetUtility.ChangeImageSprite(gameObject, digitPath);
         }
 
         static private string GetDigitFilePath(DigitType type, string number)
@@ -382,7 +382,7 @@ namespace DaniDojo.Assets
         // This function almost feels pointless
         static public void ChangeDigitColor(GameObject gameObject, Color color)
         {
-            AssetUtility.ChangeImageColor(gameObject, color);
+            OldAssetUtility.ChangeImageColor(gameObject, color);
         }
     }
 }

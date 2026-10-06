@@ -50,8 +50,8 @@ namespace DaniDojo.Assets
             var bgImageName = SongSelectAssets.GetBackgroundFromCourseLevel(level);
             var textImageName = SongSelectAssets.GetTextImageNameFromCourseLevel(level);
 
-            var backgroundObj = AssetUtility.GetOrCreateImageChild(gameObject, "Background", new Vector2(0, 0), Path.Combine("SongSelect", "CourseSelect", "Backgrounds", bgImageName));
-            var textObj = AssetUtility.GetOrCreateImageChild(gameObject, "Text", new Vector2(18, 27), Path.Combine("SongSelect", "CourseSelect", "Text", textImageName));
+            var backgroundObj = OldAssetUtility.GetOrCreateImageChild(gameObject, "Background", new Vector2(0, 0), Path.Combine("SongSelect", "CourseSelect", "Backgrounds", bgImageName));
+            var textObj = OldAssetUtility.GetOrCreateImageChild(gameObject, "Text", new Vector2(18, 27), Path.Combine("SongSelect", "CourseSelect", "Text", textImageName));
 
             background = backgroundObj.GetComponent<Image>();
             text = textObj.GetComponent<Image>();

@@ -152,7 +152,7 @@ namespace DaniDojo.Managers
                         }
                         playResultMovementCoroutine = null;
 
-                        PlayRecordParent.transform.position = new Vector2(0, 44) + AssetUtility.GetPositionFrom1080p(new Vector2(337, 0));
+                        PlayRecordParent.transform.position = new Vector2(0, 44) + OldAssetUtility.GetPositionFrom1080p(new Vector2(337, 0));
 
                         isPlayResultsAnimating = false;
 
@@ -259,10 +259,10 @@ namespace DaniDojo.Managers
                     switch (targetScreen)
                     {
                         case DaniResultScreen.Songs:
-                            Plugin.Instance.StartCoroutine(MoveOverSeconds(PlayRecordParent, new Vector2(0, 44) + AssetUtility.GetPositionFrom1080p(new Vector2(337 + 1920, 0)), 0.1f));
+                            Plugin.Instance.StartCoroutine(MoveOverSeconds(PlayRecordParent, new Vector2(0, 44) + OldAssetUtility.GetPositionFrom1080p(new Vector2(337 + 1920, 0)), 0.1f));
                             break;
                         case DaniResultScreen.PlayResults:
-                            Plugin.Instance.StartCoroutine(MoveOverSeconds(PlayRecordParent, new Vector2(0, 44) + AssetUtility.GetPositionFrom1080p(new Vector2(337, 0)), 0.1f));
+                            Plugin.Instance.StartCoroutine(MoveOverSeconds(PlayRecordParent, new Vector2(0, 44) + OldAssetUtility.GetPositionFrom1080p(new Vector2(337, 0)), 0.1f));
                             break;
                         case DaniResultScreen.Advancement:
                             break;
@@ -341,7 +341,7 @@ namespace DaniDojo.Managers
             {
                 ModLogger.Log("PlayResultsIntro", LogType.Debug);
                 isPlayResultsAnimating = true;
-                yield return MoveOverSeconds(PlayRecordParent, new Vector2(0, 44) + AssetUtility.GetPositionFrom1080p(new Vector2(337, 0)), 0.1f);
+                yield return MoveOverSeconds(PlayRecordParent, new Vector2(0, 44) + OldAssetUtility.GetPositionFrom1080p(new Vector2(337, 0)), 0.1f);
                 isPlayResultsAnimating = false;
 
                 TakeScreenshot(DaniResultScreen.PlayResults);
@@ -352,7 +352,7 @@ namespace DaniDojo.Managers
             {
                 ModLogger.Log("PlayAdvancementIntro", LogType.Debug);
                 isPlayResultsAnimating = true;
-                yield return MoveOverSeconds(PlayRecordParent, new Vector2(0, 44) + AssetUtility.GetPositionFrom1080p(new Vector2(337, 0)), 0.1f);
+                yield return MoveOverSeconds(PlayRecordParent, new Vector2(0, 44) + OldAssetUtility.GetPositionFrom1080p(new Vector2(337, 0)), 0.1f);
                 isPlayResultsAnimating = false;
 
                 TakeScreenshot(DaniResultScreen.Advancement);

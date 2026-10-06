@@ -71,7 +71,7 @@ namespace DaniDojo.Patches
                 var files = dirInfo.GetFiles("*.*");
                 for (int i = 0; i < files.Length; i++)
                 {
-                    rainbowSprites.Add(AssetUtility.LoadSprite(files[i].FullName));
+                    rainbowSprites.Add(OldAssetUtility.LoadSprite(files[i].FullName));
                 }
             }
 
@@ -82,7 +82,7 @@ namespace DaniDojo.Patches
                 var files = dirInfo.GetFiles("*.*");
                 for (int i = 0; i < files.Length; i++)
                 {
-                    smallRainbowSprites.Add(AssetUtility.LoadSprite(files[i].FullName));
+                    smallRainbowSprites.Add(OldAssetUtility.LoadSprite(files[i].FullName));
                 }
             }
 
@@ -93,7 +93,7 @@ namespace DaniDojo.Patches
                 var files = dirInfo.GetFiles("*.*");
                 for (int i = 0; i < files.Length; i++)
                 {
-                    smallResultRainbowSprites.Add(AssetUtility.LoadSprite(files[i].FullName));
+                    smallResultRainbowSprites.Add(OldAssetUtility.LoadSprite(files[i].FullName));
                 }
             }
         }

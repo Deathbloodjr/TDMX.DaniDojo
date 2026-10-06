@@ -39,7 +39,7 @@ namespace DaniDojo.Hooks
             }
             else
             {
-                var daniLoading = AssetUtility.GetChildByName(__instance.canvasGroups[0].gameObject, "DaniLoading");
+                var daniLoading = OldAssetUtility.GetChildByName(__instance.canvasGroups[0].gameObject, "DaniLoading");
                 GameObject.Destroy(daniLoading);
             }
             return true;
@@ -49,10 +49,10 @@ namespace DaniDojo.Hooks
         public static IEnumerator LoadDaniEnso(LoadingScript __instance)
         {
             EndLoading = false;
-            var daniParent = AssetUtility.CreateEmptyObject(__instance.canvasGroups[0].gameObject, "DaniLoading", Vector2.zero);
-            var loadingBg = AssetUtility.CreateImageChild(daniParent, "DaniEnsoLoadingBg", new Vector2(0, 1080 - 1300), Path.Combine("Loading", "LoadingEnsoBg.png"));
+            var daniParent = OldAssetUtility.CreateEmptyObject(__instance.canvasGroups[0].gameObject, "DaniLoading", Vector2.zero);
+            var loadingBg = OldAssetUtility.CreateImageChild(daniParent, "DaniEnsoLoadingBg", new Vector2(0, 1080 - 1300), Path.Combine("Loading", "LoadingEnsoBg.png"));
             CommonAssets.CreateDaniCourse(daniParent, new Vector2(1570, 489), DaniPlayManager.GetCurrentCourse());
-            yield return AssetUtility.MoveOverSeconds(loadingBg, Vector2.zero, 3);
+            yield return OldAssetUtility.MoveOverSeconds(loadingBg, Vector2.zero, 3);
             yield return new WaitForSeconds(1.25f);
 
             EndLoading = true;

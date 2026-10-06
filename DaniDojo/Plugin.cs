@@ -177,8 +177,15 @@ namespace DaniDojo
                         "Enters the Dan-i Dojo mode!", 
                         new Color32(37, 101, 172, 255), 
                         DaniDojoDaniCourseSelect.ChangeSceneDaniDojo);
+
+
+                    CustomModeSelectApi.AddButton("OldDaniDojo",
+                        "Old Dan-i Dojo",
+                        "Enters the Dan-i Dojo mode!",
+                        new Color32(37, 101, 172, 255),
+                        DaniDojoDaniCourseSelect.ChangeOldSceneDaniDojo);
 #endif
-				}
+                }
                 catch (Exception e)
                 {
                     ModLogger.Log("Failed to add button for DaniDojo mode.", LogType.Error);

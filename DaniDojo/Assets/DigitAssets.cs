@@ -78,7 +78,7 @@ namespace DaniDojo.Assets
             const string MaxNumber = "12345678";
 
             // If it already exists, we want to change the digits, not just add new ones on top
-            var numberObject = AssetUtility.GetOrCreateEmptyChild(parent, "RequirementBarNumber", position);
+            var numberObject = OldAssetUtility.GetOrCreateEmptyChild(parent, "RequirementBarNumber", position);
             for (int i = 0; i < MaxNumber.Length; i++)
             {
                 CreateRequirementBarDigit(numberObject, number, i, type, state);
@@ -108,7 +108,7 @@ namespace DaniDojo.Assets
                 case RequirementBarType.Medium: digitSpacing = 27; break;
                 case RequirementBarType.Small: digitSpacing = 20; break;
             }
-            var digitObject = AssetUtility.GetOrCreateEmptyChild(parent, "Digit" + (index + 1), new Vector2(index * digitSpacing, 0));
+            var digitObject = OldAssetUtility.GetOrCreateEmptyChild(parent, "Digit" + (index + 1), new Vector2(index * digitSpacing, 0));
             if (numberString.Length <= index)
             {
                 digitObject.SetActive(false);
@@ -136,9 +136,9 @@ namespace DaniDojo.Assets
                 transparentRect = new Vector2(-2, 2);
             }
 
-            var border = AssetUtility.GetOrCreateImageChild(digitObject, "Border", borderRect, Path.Combine(AssetFilePath, "Digits", "RequirementBar" + type.ToString(), "Border", digitString + ".png"));
-            var fill = AssetUtility.GetOrCreateImageChild(digitObject, "Fill", fillRect, Path.Combine(AssetFilePath, "Digits", "RequirementBar" + type.ToString(), "Fill", digitString + ".png"));
-            var transparent = AssetUtility.GetOrCreateImageChild(digitObject, "Transparent", transparentRect, Path.Combine(AssetFilePath, "Digits", "RequirementBar" + type.ToString(), "Transparent", digitString + ".png"));
+            var border = OldAssetUtility.GetOrCreateImageChild(digitObject, "Border", borderRect, Path.Combine(AssetFilePath, "Digits", "RequirementBar" + type.ToString(), "Border", digitString + ".png"));
+            var fill = OldAssetUtility.GetOrCreateImageChild(digitObject, "Fill", fillRect, Path.Combine(AssetFilePath, "Digits", "RequirementBar" + type.ToString(), "Fill", digitString + ".png"));
+            var transparent = OldAssetUtility.GetOrCreateImageChild(digitObject, "Transparent", transparentRect, Path.Combine(AssetFilePath, "Digits", "RequirementBar" + type.ToString(), "Transparent", digitString + ".png"));
 
             border.GetOrAddComponent<Image>().color = DigitColors.RequirementBarBorderColors[state];
             fill.GetOrAddComponent<Image>().color = DigitColors.RequirementBarFillColors[state];
