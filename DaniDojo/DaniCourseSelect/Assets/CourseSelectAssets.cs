@@ -50,5 +50,12 @@ namespace DaniDojo.DaniCourseSelect.Assets
             AssetUtility.SetUniformScale(textImage, 1.75f);
             return textImage;
         }
+
+        public static GameObject CreateBackground(GameObject parent)
+        {
+            GameObject background = AssetUtility.CreateImage(parent, "Background", DaniSprites.CourseSelect.Intro.Files.BG.GetPath()).gameObject;
+            AssetUtility.SetImageColor(background, new Color(0.5f, 0.5f, 0.5f));
+            return background;
+        }
     }
 }

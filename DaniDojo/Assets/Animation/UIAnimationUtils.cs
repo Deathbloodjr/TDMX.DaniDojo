@@ -29,6 +29,23 @@ namespace DaniDojo.Assets.Animation
             rect.anchoredPosition = targetPos;
         }
 
+        public static IEnumerator MovementRoutine(this Transform transform, Vector2 targetPos, float duration, Func<float, float> easing = null)
+        {
+            easing ??= Easing.Linear;
+            Vector2 startPos = transform.localPosition;
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = easing(Mathf.Clamp01(elapsed / duration));
+                transform.localPosition = Vector2.LerpUnclamped(startPos, targetPos, t);
+                yield return null;
+            }
+
+            transform.localPosition = targetPos;
+        }
+
         public static IEnumerator ScaleRoutine(this Transform transform, Vector3 targetScale, float duration, Func<float, float> easing = null)
         {
             easing ??= Easing.Linear;
@@ -44,6 +61,15 @@ namespace DaniDojo.Assets.Animation
             }
 
             transform.localScale = targetScale;
+        }
+
+        public static IEnumerator FadeRoutine(this GameObject gameObject, float targetAlpha, float duration, Func<float, float> easing = null)
+        {
+            var canvasGroup = gameObject.GetComponent<CanvasGroup>();
+            if (canvasGroup != null)
+            {
+                yield return canvasGroup.FadeRoutine(targetAlpha, duration, easing);
+            }
         }
 
         public static IEnumerator FadeRoutine(this CanvasGroup canvasGroup, float targetAlpha, float duration, Func<float, float> easing = null)

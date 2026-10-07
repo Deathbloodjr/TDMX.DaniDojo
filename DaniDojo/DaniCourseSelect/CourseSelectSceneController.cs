@@ -57,7 +57,7 @@ namespace DaniDojo.DaniCourseSelect
             introHandler = introHandlerObject.AddComponent<IntroHandler>();
             introHandler.Initialize(this);
 
-            var confirmationDialogCanvas = AssetUtility.CreateRootCanvas("confirmationDialogCanvas");
+            var confirmationDialogCanvas = AssetUtility.CreateRootCanvas("ConfirmationDialogCanvas");
             var confirmationDialogObject = AssetUtility.CreateUIContainer(confirmationDialogCanvas.gameObject, "ConfirmationDialog");
             confirmationDialog = confirmationDialogObject.AddComponent<ConfirmationDialog>();
             confirmationDialog.Initialize(this);
@@ -76,12 +76,15 @@ namespace DaniDojo.DaniCourseSelect
             // Input is routed ONLY to the active state handler
             switch (currentState)
             {
-                case CourseSelectState.Intro:
-                    if (Input.GetButtonDown("Submit") || Input.GetButtonDown("Cancel"))
-                    {
-                        //introHandler.SkipIntro();
-                    }
-                    break;
+                // I don't think Intro should get any input
+                // It would only be used to skip the animation, and I don't plan on allowing it to be skipped
+                // Even though there's really no downside to allowing it to be skipped, whatever
+                //case CourseSelectState.Intro:
+                //    if (Input.GetButtonDown("Submit") || Input.GetButtonDown("Cancel"))
+                //    {
+                //        //introHandler.SkipIntro();
+                //    }
+                //    break;
 
                 //case CourseSelectState.SelectingCourse:
                 //    selectionManager.HandleInput();
